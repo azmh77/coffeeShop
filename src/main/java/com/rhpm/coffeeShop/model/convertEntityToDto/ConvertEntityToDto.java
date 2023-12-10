@@ -19,7 +19,6 @@ public class ConvertEntityToDto {
         userResponseDto.setLastName(user.getLastName());
         userResponseDto.setEmail(user.getEmail());
         userResponseDto.setEmailConfirmation(true);
-        userResponseDto.setPassword(user.getPassword());
         userResponseDto.setPhoneNumber(user.getPhoneNumber());
         userResponseDto.setPhoneNumberConfirmation(true);
         userResponseDto.setNationalCode(user.getNationalCode());
@@ -28,12 +27,14 @@ public class ConvertEntityToDto {
         userResponseDto.setAddress(user.getAddress());
         userResponseDto.setZipCode(user.getZipCode());
         userResponseDto.setCurrentWalletBalance(user.getCurrentWalletBalance());
-        userResponseDto.setRole(userResponseDto.getRole());
-        userResponseDto.setIsActive(true);
-        userResponseDto.setRegisterDate(user.getRegisterDate());
+        userResponseDto.setRole(user.getRole().name());
+        userResponseDto.setIsActive(user.getIsActive());
         userResponseDto.setLastPurchase(user.getLastPurchase());
         userResponseDto.setLastPasswordChange(user.getLastPasswordChange());
         userResponseDto.setLastEmailChange(user.getLastEmailChange());
+        userResponseDto.setProfileImgName(user.getProfileImgName());
+        userResponseDto.setRegisterDate(user.getRegisterDate());
+        userResponseDto.setIsActive(true);
         List<OldUserPasswordResponseDto> oldUserPasswordResponseDtos = user.getOldUserPasswords().stream().map(oldUserPasswordEntity -> {
             OldUserPasswordResponseDto oldUserPasswordResponseDto = new OldUserPasswordResponseDto();
             oldUserPasswordResponseDto.setId(oldUserPasswordEntity.getId());

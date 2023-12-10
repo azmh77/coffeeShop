@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -60,15 +61,17 @@ public class UserEntity implements Serializable, UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     private Boolean isActive;
-    private Date RegisterDate;
-    private Date lastPurchase;
-    private Date lastPasswordChange;
-    private Date lastEmailChange;
+    private LocalDateTime RegisterDate;
+    private LocalDateTime lastPurchase;
+    private LocalDateTime lastPasswordChange;
+    private LocalDateTime lastEmailChange;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<OldUserPasswordEntity> oldUserPasswords;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<OldUserEmailEntity> oldUserEmails;
     private byte incorrectLoginCount;
+    private Boolean isCompleteData = false;
+    private Integer completeDataCount = 0;
     @Lob
     private byte[] profileImgUrl;
     private String profileImgName;

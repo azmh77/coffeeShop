@@ -2,6 +2,7 @@ package com.rhpm.coffeeShop.model.dto.responseDto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,6 @@ public class UserResponseDto {
     private String lastName;
     private String email;
     private Boolean emailConfirmation;
-    private String password;
     private String phoneNumber;
     private Boolean phoneNumberConfirmation;
     private String nationalCode;
@@ -23,10 +23,10 @@ public class UserResponseDto {
     private String currentWalletBalance;
     private String role;
     private Boolean isActive;
-    private Date RegisterDate;
-    private Date lastPurchase;
-    private Date lastPasswordChange;
-    private Date lastEmailChange;
+    private LocalDateTime RegisterDate;
+    private LocalDateTime lastPurchase;
+    private LocalDateTime lastPasswordChange;
+    private LocalDateTime lastEmailChange;
     private List<OldUserPasswordResponseDto> oldUserPasswords;
     private List<OldUserEmailResponseDto> oldUserEmails;
     private byte incorrectLoginCount;
