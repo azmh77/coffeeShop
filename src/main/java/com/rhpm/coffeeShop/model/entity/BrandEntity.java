@@ -25,6 +25,13 @@ public class BrandEntity implements Serializable {
             generator = "brands_sequence",
             strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(nullable = false, length = 60, unique = true)
     private String brandName;
+    @Column(nullable = false, length = 10000)
+    @Lob
     private String brandAbout;
+    @Lob
+    @Column(length = 100000)
+    private byte[] brandImgUrl;
+    private String brandImgName;
 }

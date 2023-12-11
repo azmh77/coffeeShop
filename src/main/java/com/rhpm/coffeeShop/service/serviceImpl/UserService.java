@@ -137,6 +137,13 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
     }
 
     @Override
+    public byte[] getProfilePicUser(Long id) throws MasterException {
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new MasterException("کاربر مورد نظر یافت نشد!"));
+        return ImageUtils.decompressImage(userEntity.getProfileImgUrl());
+    }
+
+    @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

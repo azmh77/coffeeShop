@@ -73,6 +73,7 @@ public class UserEntity implements Serializable, UserDetails {
     private Boolean isCompleteData = false;
     private Integer completeDataCount = 0;
     @Lob
+    @Column(length = 100000)
     private byte[] profileImgUrl;
     private String profileImgName;
 

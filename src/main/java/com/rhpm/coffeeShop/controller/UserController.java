@@ -11,6 +11,8 @@ import com.rhpm.coffeeShop.model.exceptions.MasterException;
 import com.rhpm.coffeeShop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,6 +55,14 @@ public class UserController {
     public APIResponse<Page<UserEntity>> getUserWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
         Page<UserEntity> productsWithPagination = userService.getUserWithPagination(offset, pageSize);
         return new APIResponse<>(productsWithPagination.getSize(), productsWithPagination);
+    }
+
+    @GetMapping("/profilePic/{id}")
+    public ResponseEntity<?> getUserCoverPhoto(@PathVariable Long id) throws MasterException {
+        byte[] imageData = userService.getProfilePicUser(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.valueOf("image/png"))
+                .body(imageData);
     }
 
     @DeleteMapping()

@@ -11,6 +11,6 @@ public class UserCompleteDataRequestDto {
     private String city;
     private String address;
     private String zipCode;
-    private MultipartFile file;
+    private MultipartFile profilePic;
     private Long userId;
 }

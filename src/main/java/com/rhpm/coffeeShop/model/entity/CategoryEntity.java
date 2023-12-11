@@ -8,22 +8,22 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "CS_TAGS")
+@Table(name = "CS_CATEGORY")
 @Data
 @RequiredArgsConstructor
-public class TagEntity implements Serializable {
+public class CategoryEntity implements Serializable {
     @Id
     @SequenceGenerator(
-            name = "tags_sequence",
-            sequenceName = "tags_sequence",
+            name = "category_sequence",
+            sequenceName = "category_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
-            generator = "tags_sequence",
+            generator = "category_sequence",
             strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Column(nullable = false, length = 120, unique = true)
+    @Column(nullable = false, length = 60, unique = true)
     private String title;
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<ProductEntity> products;
+    private List<PropertyEntity> products;
 }

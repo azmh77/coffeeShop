@@ -26,4 +26,6 @@ public interface UserService {
     void deleteUser(Long id);
 
     Page<UserEntity> getUserWithPagination(int offset, int pageSize);
+
+    byte[] getProfilePicUser(Long id) throws MasterException;
 }
