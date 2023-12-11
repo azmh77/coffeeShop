@@ -1,14 +1,17 @@
 package com.rhpm.coffeeShop.model.convertEntityToDto;
 
+import com.rhpm.coffeeShop.model.dto.responseDto.BrandResponseDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.OldUserEmailResponseDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.OldUserPasswordResponseDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.UserResponseDto;
+import com.rhpm.coffeeShop.model.entity.BrandEntity;
 import com.rhpm.coffeeShop.model.entity.OldUserEmailEntity;
 import com.rhpm.coffeeShop.model.entity.OldUserPasswordEntity;
 import com.rhpm.coffeeShop.model.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class ConvertEntityToDto {
@@ -81,4 +84,14 @@ public class ConvertEntityToDto {
         return oldUserPasswordResponseDto;
     }
 
+    public static BrandResponseDto convertBrandEntityToDto(BrandEntity brand) {
+        BrandResponseDto brandResponseDto = new BrandResponseDto();
+        brandResponseDto.setId(brand.getId());
+        brandResponseDto.setBrandName(brand.getBrandName());
+        brandResponseDto.setBrandAbout(brand.getBrandAbout());
+        brandResponseDto.setBrandImgUrl(brand.getBrandImgUrl());
+        brandResponseDto.setBrandImgName(UUID.randomUUID().toString());
+        brandResponseDto.setUserCreateId(brand.getUserCreated().getId());
+        return brandResponseDto;
+    }
 }

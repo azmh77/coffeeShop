@@ -27,11 +27,13 @@ public class BrandEntity implements Serializable {
     private Long id;
     @Column(nullable = false, length = 60, unique = true)
     private String brandName;
-    @Column(nullable = false, length = 10000)
+    @Column(nullable = false, length = 100000)
     @Lob
     private String brandAbout;
     @Lob
     @Column(length = 100000)
     private byte[] brandImgUrl;
     private String brandImgName;
+    @ManyToOne
+    private UserEntity userCreated;
 }
