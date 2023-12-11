@@ -3,8 +3,11 @@ package com.rhpm.coffeeShop.model.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,4 +29,10 @@ public class TagEntity implements Serializable {
     private String title;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<ProductEntity> products;
+    @ManyToOne
+    private UserEntity userCreate;
+    @CreationTimestamp
+    private Date createAt;
+    @UpdateTimestamp
+    private Date updateAt;
 }

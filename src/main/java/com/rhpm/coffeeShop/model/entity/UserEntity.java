@@ -80,6 +80,8 @@ public class UserEntity implements Serializable, UserDetails {
     @Column(length = 100000)
     private byte[] profileImgUrl;
     private String profileImgName;
+    @Lob
+    private String CSID;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

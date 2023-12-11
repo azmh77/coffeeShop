@@ -32,4 +32,5 @@ public class UserResponseDto {
     private byte incorrectLoginCount;
     private byte[] profileImgUrl;
     private String profileImgName;
+    private String CSID;
 }

@@ -55,6 +55,7 @@ public class ConvertEntityToDto {
         userResponseDto.setIncorrectLoginCount(user.getIncorrectLoginCount());
         userResponseDto.setProfileImgUrl(user.getProfileImgUrl());
         userResponseDto.setProfileImgUrl(user.getProfileImgUrl());
+        userResponseDto.setCSID(user.getId() + "_CS_" + UUID.randomUUID() + "_" + user.getFirstName() + "_" + user.getLastName());
         return userResponseDto;
     }
 
@@ -97,5 +98,25 @@ public class ConvertEntityToDto {
         categoryResponseDto.setCreateAt(category.getCreateAt());
         categoryResponseDto.setUpdateAt(category.getUpdateAt());
         return categoryResponseDto;
+    }
+
+    public static DiscountResponseDto convertDiscountEntityToDto(DiscountEntity discount) {
+        DiscountResponseDto discountResponseDto = new DiscountResponseDto();
+        discountResponseDto.setId(discount.getId());
+        discountResponseDto.setCode(discount.getCode());
+        discountResponseDto.setUserCreateId(discount.getUserCreate().getId());
+        discountResponseDto.setCreateAt(discount.getCreateAt());
+        discountResponseDto.setUpdateAt(discount.getUpdateAt());
+        return discountResponseDto;
+    }
+
+    public static TagResponseDto convertTagEntityToDto(TagEntity tag) {
+        TagResponseDto tagResponseDto = new TagResponseDto();
+        tagResponseDto.setId(tag.getId());
+        tagResponseDto.setTitle(tag.getTitle());
+        tagResponseDto.setUserCreateId(tag.getUserCreate().getId());
+        tagResponseDto.setCreateAt(tag.getCreateAt());
+        tagResponseDto.setUpdateAt(tag.getUpdateAt());
+        return tagResponseDto;
     }
 }
