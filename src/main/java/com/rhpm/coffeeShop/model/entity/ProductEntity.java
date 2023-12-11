@@ -46,9 +46,10 @@ public class ProductEntity implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<TagEntity> tag;
     @Column(nullable = false)
-    private Integer inventoryCount;
-    @OneToMany
-    private List<ProductPicEntity> productPic;
+    private Long inventoryCount;
+    @Lob
+    @Column(length = 100000)
+    private byte[] productImgUrl;
     private String productImgName;
     private Boolean isEnable;
     private Boolean discount;

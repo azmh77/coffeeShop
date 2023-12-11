@@ -122,17 +122,29 @@ public class ConvertEntityToDto {
 
     public static ProductResponseDto convertProductEntityToDto(ProductEntity product) {
         ProductResponseDto productResponseDto = new ProductResponseDto();
+        productResponseDto.setId(product.getId());
         productResponseDto.setTitle(product.getTitle());
         productResponseDto.setDescription(product.getDescription());
         productResponseDto.setBrandId(product.getBrand().getId());
         productResponseDto.setPrice(product.getPrice());
         productResponseDto.setWeight(product.getWeight());
         productResponseDto.setProductType(product.getProductType());
-//        productResponseDto.setTag();
-        productResponseDto.setInventoryCount(product.getSellCount());
+        List<TagResponseDto> tagResponseDtos = product.getTag().stream().map(tagEntity -> {
+            TagResponseDto tagRes = new TagResponseDto();
+            tagRes.setId(tagEntity.getId());
+            tagRes.setTitle(tagEntity.getTitle());
+            tagRes.setUserCreateId(tagEntity.getUserCreate().getId());
+            tagRes.setCreateAt(tagEntity.getCreateAt());
+            tagRes.setUpdateAt(tagEntity.getUpdateAt());
+            return tagRes;
+        }).toList();
+        productResponseDto.setTag(tagResponseDtos);
+        productResponseDto.setInventoryCount(product.getInventoryCount());
+        productResponseDto.setProductImgUrl(product.getProductImgUrl());
+        productResponseDto.setProductImgName(product.getProductImgName());
         productResponseDto.setIsEnable(product.getIsEnable());
         productResponseDto.setDiscount(product.getDiscount());
-        productResponseDto.setDiscountId(product.getDiscountEntity().getId());
+        productResponseDto.setDiscountCode(product.getDiscountEntity().getCode());
         productResponseDto.setLikeCount(product.getLikeCount());
         productResponseDto.setCommentCount(product.getCommentCount());
         productResponseDto.setUserCreatedId(product.getUserCreated().getId());
@@ -141,6 +153,16 @@ public class ConvertEntityToDto {
         productResponseDto.setCreated(product.getCreated());
         productResponseDto.setUpdated(product.getUpdated());
         productResponseDto.setSellCount(product.getSellCount());
+        List<CategoryResponseDto> categoryResponseDtos = product.getCategory().stream().map(categoryEntity -> {
+            CategoryResponseDto category = new CategoryResponseDto();
+            category.setId(categoryEntity.getId());
+            category.setTitle(categoryEntity.getTitle());
+            category.setUserCreateId(categoryEntity.getUserCreateId().getId());
+            category.setCreateAt(categoryEntity.getCreateAt());
+            category.setUpdateAt(categoryEntity.getUpdateAt());
+            return category;
+        }).toList();
+        productResponseDto.setCategory(categoryResponseDtos);
         return productResponseDto;
     }
 }

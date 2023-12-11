@@ -16,8 +16,8 @@ public class ProductRequestDto {
     private Long Weight;
     private String productType;
     private List<TagEntity> tag;
-    private Integer inventoryCount;
-    private List<MultipartFile> profilePic;
+    private Long inventoryCount;
+    private MultipartFile profilePic;
     private Boolean discount;
     private Long discountId;
     private Long userCreatedId;

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +30,7 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
                 || productRequestDto.getPrice().isEmpty() || productRequestDto.getProductType().isEmpty()) {
             throw new MasterException("فیلد ها نباید خالی باشند!");
 
-        } else if (productRequestDto.getWeight().equals(0L) || productRequestDto.getInventoryCount().equals(0)) {
+        } else if (productRequestDto.getWeight().equals(0L) || productRequestDto.getInventoryCount().equals(0L)) {
             throw new MasterException("وزن یا مقدار اولیه محصول نباید صفر باشد!");
         } else {
             ProductEntity product = new ProductEntity();
@@ -54,6 +55,14 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
             product.setDiscountEntity(discount);
             product.setUserCreated(user);
             product.setCategory(categorys);
+            product.setProductImgUrl(ImageUtils.compressImage(productRequestDto.getProfilePic().getBytes()));
+            product.setProductImgName(UUID.randomUUID().toString());
+            product.setIsEnable(true);
+            product.setLikeCount(0L);
+            product.setCommentCount(0L);
+            product.setSellCount(0L);
+            product.setAdminView(false);
+            product.setViewCount(0L);
             productRepository.save(product);
             return ConvertEntityToDto.convertProductEntityToDto(product);
         }

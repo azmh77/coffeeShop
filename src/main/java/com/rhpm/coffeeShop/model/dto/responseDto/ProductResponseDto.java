@@ -17,11 +17,11 @@ public class ProductResponseDto {
     private String productType;
     private List<TagResponseDto> tag;
     private Long inventoryCount;
-    //    private List<ProductPicEntity> productPic;
-//    private String productImgName;
+    private byte[] productImgUrl;
+    private String productImgName;
     private Boolean isEnable;
     private Boolean discount;
-    private Long discountId;
+    private String discountCode;
     private Long likeCount;
     private Long commentCount;
     private Long userCreatedId;
@@ -32,5 +32,5 @@ public class ProductResponseDto {
     private LocalDateTime created;
     private LocalDateTime updated;
     private Long sellCount;
-//    private List<CategoryEntity> category;
+    private List<CategoryResponseDto> category;
 }
