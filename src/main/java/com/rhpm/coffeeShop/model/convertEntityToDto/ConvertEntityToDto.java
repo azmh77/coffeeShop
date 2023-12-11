@@ -119,4 +119,28 @@ public class ConvertEntityToDto {
         tagResponseDto.setUpdateAt(tag.getUpdateAt());
         return tagResponseDto;
     }
+
+    public static ProductResponseDto convertProductEntityToDto(ProductEntity product) {
+        ProductResponseDto productResponseDto = new ProductResponseDto();
+        productResponseDto.setTitle(product.getTitle());
+        productResponseDto.setDescription(product.getDescription());
+        productResponseDto.setBrandId(product.getBrand().getId());
+        productResponseDto.setPrice(product.getPrice());
+        productResponseDto.setWeight(product.getWeight());
+        productResponseDto.setProductType(product.getProductType());
+//        productResponseDto.setTag();
+        productResponseDto.setInventoryCount(product.getSellCount());
+        productResponseDto.setIsEnable(product.getIsEnable());
+        productResponseDto.setDiscount(product.getDiscount());
+        productResponseDto.setDiscountId(product.getDiscountEntity().getId());
+        productResponseDto.setLikeCount(product.getLikeCount());
+        productResponseDto.setCommentCount(product.getCommentCount());
+        productResponseDto.setUserCreatedId(product.getUserCreated().getId());
+        productResponseDto.setViewCount(product.getViewCount());
+        productResponseDto.setAdminView(product.getAdminView());
+        productResponseDto.setCreated(product.getCreated());
+        productResponseDto.setUpdated(product.getUpdated());
+        productResponseDto.setSellCount(product.getSellCount());
+        return productResponseDto;
+    }
 }

@@ -40,7 +40,7 @@ public class ProductEntity implements Serializable {
     @Column(nullable = false)
     private String price;
     @Column(nullable = false)
-    private Integer Weight;
+    private Long Weight;
     @Column(nullable = false)
     private String productType;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -54,14 +54,12 @@ public class ProductEntity implements Serializable {
     private Boolean discount;
     @ManyToOne
     private DiscountEntity discountEntity;
-    private Integer likeCount;
-    private Integer commentCount;
+    private Long likeCount;
+    private Long commentCount;
     @ManyToOne
     private UserEntity userCreated;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserEntity> usersLiked;
-    @ManyToMany
-    private List<PropertyEntity> propertys;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<CommentEntity> comments;
     private Long viewCount;
