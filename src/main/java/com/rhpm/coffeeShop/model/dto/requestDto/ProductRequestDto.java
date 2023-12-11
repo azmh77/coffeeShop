@@ -21,7 +21,6 @@ public class ProductRequestDto {
     private MultipartFile profilePic;
     private Boolean discount;
     private Integer discountId;
-    private Integer likeCount;
     private Integer userCreatedId;
     private List<PropertyEntity> propertys;
     private List<CategoryEntity> category;

@@ -55,6 +55,7 @@ public class ProductEntity implements Serializable {
     @ManyToOne
     private DiscountEntity discountEntity;
     private Integer likeCount;
+    private Integer commentCount;
     @ManyToOne
     private UserEntity userCreated;
     @ManyToMany(fetch = FetchType.EAGER)
