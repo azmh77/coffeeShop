@@ -52,7 +52,6 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
                     .password(passwordEncoder.encode(userRequestDto.getPassword()))
                     .role(Role.USER)
                     .isActive(true)
-                    .RegisterDate(LocalDateTime.now())
                     .incorrectLoginCount((byte) 0)
                     .currentWalletBalance("0")
                     .emailConfirmation(false)
@@ -98,7 +97,7 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
                 user.setCity(userCompleteDataRequestDto.getCity());
                 user.setAddress(userCompleteDataRequestDto.getAddress());
                 user.setZipCode(userCompleteDataRequestDto.getZipCode());
-                user.setProfileImgUrl(ImageUtils.compressImage(userCompleteDataRequestDto.getFile().getBytes()));
+                user.setProfileImgUrl(ImageUtils.compressImage(userCompleteDataRequestDto.getProfilePic().getBytes()));
                 user.setProfileImgName(UUID.randomUUID().toString());
             } else {
                 user.setPhoneNumber(userCompleteDataRequestDto.getPhoneNumber());
@@ -107,7 +106,7 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
                 user.setCity(userCompleteDataRequestDto.getCity());
                 user.setAddress(userCompleteDataRequestDto.getAddress());
                 user.setZipCode(userCompleteDataRequestDto.getZipCode());
-                user.setProfileImgUrl(ImageUtils.compressImage(userCompleteDataRequestDto.getFile().getBytes()));
+                user.setProfileImgUrl(ImageUtils.compressImage(userCompleteDataRequestDto.getProfilePic().getBytes()));
                 user.setProfileImgName(UUID.randomUUID().toString());
                 user.setIsCompleteData(true);
                 userRepository.save(user);
@@ -132,8 +131,9 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
     }
 
     @Override
-    public Page<UserEntity> getUserWithPagination(int offset, int pageSize) {
-        return userRepository.findAll(PageRequest.of(offset, pageSize));
+    public Page<UserResponseDto> getUserWithPagination(int offset, int pageSize) {
+        Page<UserEntity> userEntities = userRepository.findAll(PageRequest.of(offset, pageSize));
+        return userEntities.map(ConvertEntityToDto::convertUserEntityToDto);
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.rhpm.coffeeShop.authentication.AuthResponse;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserAuthRequestDto;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserCompleteDataRequestDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.UserResponseDto;
-import com.rhpm.coffeeShop.model.entity.UserEntity;
 import com.rhpm.coffeeShop.model.exceptions.MasterException;
 import org.springframework.data.domain.Page;
 
@@ -25,7 +24,7 @@ public interface UserService {
 
     void deleteUser(Long id);
 
-    Page<UserEntity> getUserWithPagination(int offset, int pageSize);
+    Page<UserResponseDto> getUserWithPagination(int offset, int pageSize);
 
     byte[] getProfilePicUser(Long id) throws MasterException;
 }

@@ -6,7 +6,6 @@ import com.rhpm.coffeeShop.authentication.AuthResponse;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserAuthRequestDto;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserCompleteDataRequestDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.UserResponseDto;
-import com.rhpm.coffeeShop.model.entity.UserEntity;
 import com.rhpm.coffeeShop.model.exceptions.MasterException;
 import com.rhpm.coffeeShop.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +51,8 @@ public class UserController {
     }
 
     @GetMapping("/pagination/{offset}/{pageSize}")
-    public APIResponse<Page<UserEntity>> getUserWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
-        Page<UserEntity> productsWithPagination = userService.getUserWithPagination(offset, pageSize);
+    public APIResponse<Page<UserResponseDto>> getUserWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
+        Page<UserResponseDto> productsWithPagination = userService.getUserWithPagination(offset, pageSize);
         return new APIResponse<>(productsWithPagination.getSize(), productsWithPagination);
     }
 

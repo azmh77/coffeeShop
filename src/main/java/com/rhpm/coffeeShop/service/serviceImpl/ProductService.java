@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 public class ProductService implements com.rhpm.coffeeShop.service.ProductService {
     @Override
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
-
+        return null;
     }
 }

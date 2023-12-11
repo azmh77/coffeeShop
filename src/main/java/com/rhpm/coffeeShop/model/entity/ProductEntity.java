@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -33,7 +35,7 @@ public class ProductEntity implements Serializable {
     @Column(nullable = false, length = 10000)
     private String description;
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private BrandEntity brand;
     @Column(nullable = false)
     private String price;
@@ -45,9 +47,8 @@ public class ProductEntity implements Serializable {
     private List<TagEntity> tag;
     @Column(nullable = false)
     private Integer inventoryCount;
-    @Lob
-    @Column(length = 100000)
-    private List<byte[]> productImgUrl;
+    @OneToMany
+    private List<ProductPicEntity> productPic;
     private String productImgName;
     private Boolean isEnable;
     private Boolean discount;
@@ -64,8 +65,10 @@ public class ProductEntity implements Serializable {
     private List<CommentEntity> comments;
     private Long viewCount;
     private Boolean adminView;
-    private Date created;
-    private Date updated;
+    @CreationTimestamp
+    private LocalDateTime created;
+    @UpdateTimestamp
+    private LocalDateTime updated;
     private Long sellCount;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<CategoryEntity> category;
