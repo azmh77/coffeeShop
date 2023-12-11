@@ -20,4 +20,9 @@ public class ProductController {
     public ProductResponseDto createProduct(@ModelAttribute ProductRequestDto productRequestDto) throws MasterException, IOException {
         return productService.createProduct(productRequestDto);
     }
+
+    @GetMapping("/{id}")
+    public ProductResponseDto getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
+    }
 }

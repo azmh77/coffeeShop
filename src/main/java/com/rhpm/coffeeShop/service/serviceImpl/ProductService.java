@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -41,13 +42,6 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
                     () -> new MasterException("کاربر پیدا نشد!")
             );
             List<CategoryEntity> categorys = productRequestDto.getCategory();
-            List<byte[]> bytes = productRequestDto.getProfilePic().stream().map(multipartFile -> {
-                try {
-                    return ImageUtils.compressImage(multipartFile.getBytes());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }).toList();
             product.setTitle(productRequestDto.getTitle());
             product.setDescription(productRequestDto.getDescription());
             product.setBrand(brand);
@@ -63,5 +57,11 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
             productRepository.save(product);
             return ConvertEntityToDto.convertProductEntityToDto(product);
         }
+    }
+
+    @Override
+    public ProductResponseDto getProductById(Long id) {
+        Optional<ProductEntity> user = productRepository.findById(id);
+        return ConvertEntityToDto.convertProductEntityToDto(user.get());
     }
 }
