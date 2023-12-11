@@ -55,7 +55,7 @@ public class ConvertEntityToDto {
         userResponseDto.setIncorrectLoginCount(user.getIncorrectLoginCount());
         userResponseDto.setProfileImgUrl(user.getProfileImgUrl());
         userResponseDto.setProfileImgUrl(user.getProfileImgUrl());
-        userResponseDto.setCSID(user.getId() + "_CS_" + UUID.randomUUID() + "_" + user.getFirstName() + "_" + user.getLastName());
+        userResponseDto.setCSID(user.getCSID());
         return userResponseDto;
     }
 

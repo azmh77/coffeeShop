@@ -58,6 +58,7 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
                     .phoneNumberConfirmation(false)
                     .isCompleteData(false)
                     .completeDataCount(0)
+                    .CSID("_CS_" + UUID.randomUUID() + "_" + userRequestDto.getFirstName() + "_" + userRequestDto.getLastName())
                     .build());
             var jwtToken = jwtService.generateToken(userEntity);
             return AuthResponse.builder()
