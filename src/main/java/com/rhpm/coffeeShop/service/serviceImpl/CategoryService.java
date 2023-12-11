@@ -22,7 +22,7 @@ public class CategoryService implements com.rhpm.coffeeShop.service.CategoryServ
     @Override
     public CategoryResponseDto createCategory(CategoryRequestDto categoryRequestDto) throws MasterException {
         Optional<CategoryEntity> categoryEntity = categoryRepository.findByTitle(categoryRequestDto.getTitle());
-        if (categoryRequestDto.getTitle().equals("")) {
+        if (categoryRequestDto.getTitle().isEmpty()) {
             throw new MasterException("فیلد ها نباید خالی باشند!");
         } else if (categoryRequestDto.getTitle().length() > 60) {
             throw new MasterException("تعداد کارکتر برای اسم دسته بندی باید کمتر از 60 کاراکتر باشد!");

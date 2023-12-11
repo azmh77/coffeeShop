@@ -25,7 +25,7 @@ public class BrandService implements com.rhpm.coffeeShop.service.BrandService {
     @Override
     public BrandResponseDto createBrand(BrandRequestDto brandRequestDto) throws MasterException, IOException {
         Optional<BrandEntity> brandEntity = brandRepository.findByBrandName(brandRequestDto.getBrandName());
-        if (brandRequestDto.getBrandName().equals("") || brandRequestDto.getBrandAbout().equals("")) {
+        if (brandRequestDto.getBrandName().isEmpty() || brandRequestDto.getBrandAbout().isEmpty()) {
             throw new MasterException("فیلد ها نباید خالی باشند!");
         } else if (brandRequestDto.getBrandPic().isEmpty()) {
             throw new MasterException("لوگوی برند نباید خالی باشد!");

@@ -1,18 +1,43 @@
 package com.rhpm.coffeeShop.service.serviceImpl;
 
+import com.rhpm.coffeeShop.model.convertEntityToDto.ConvertEntityToDto;
 import com.rhpm.coffeeShop.model.dto.requestDto.TagRequestDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.TagResponseDto;
+import com.rhpm.coffeeShop.model.entity.BrandEntity;
+import com.rhpm.coffeeShop.model.entity.TagEntity;
+import com.rhpm.coffeeShop.model.entity.UserEntity;
+import com.rhpm.coffeeShop.model.exceptions.MasterException;
 import com.rhpm.coffeeShop.repository.TagRepository;
+import com.rhpm.coffeeShop.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class TagService implements com.rhpm.coffeeShop.service.TagService {
     private final TagRepository tagRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public TagResponseDto createTag(TagRequestDto tagRequestDto) {
-        return null;
+    public TagResponseDto createTag(TagRequestDto tagRequestDto) throws MasterException, IOException {
+        Optional<TagEntity> tagEntity = tagRepository.findByTitle(tagRequestDto.getTitle());
+        if (tagRequestDto.getTitle().isEmpty()) {
+            throw new MasterException("فیلد ها نباید خالی باشند!");
+        } else if (tagRequestDto.getTitle().length() > 120) {
+            throw new MasterException("طول تگ بیش از حد مجاز!");
+        } else if (tagEntity.isPresent()) {
+            throw new MasterException("تگ تکراری است!");
+        } else {
+            TagEntity tag = new TagEntity();
+            UserEntity user = userRepository.findById(tagRequestDto.getUserCreateId())
+                    .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
+            tag.setTitle(tagRequestDto.getTitle());
+            tag.setUserCreate(user);
+            tagRepository.save(tag);
+            return ConvertEntityToDto.convertTagEntityToDto(tag);
+        }
     }
 }

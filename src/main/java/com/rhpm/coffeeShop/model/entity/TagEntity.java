@@ -27,8 +27,6 @@ public class TagEntity implements Serializable {
     private Long id;
     @Column(nullable = false, length = 120, unique = true)
     private String title;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<ProductEntity> products;
     @ManyToOne
     private UserEntity userCreate;
     @CreationTimestamp
