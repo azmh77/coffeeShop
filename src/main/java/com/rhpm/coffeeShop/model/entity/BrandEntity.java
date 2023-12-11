@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "CS_BRANDS")
@@ -36,4 +39,8 @@ public class BrandEntity implements Serializable {
     private String brandImgName;
     @ManyToOne
     private UserEntity userCreated;
+    @CreationTimestamp
+    private Date createAt;
+    @UpdateTimestamp
+    private Date updateAt;
 }

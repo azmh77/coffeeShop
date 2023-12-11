@@ -3,8 +3,11 @@ package com.rhpm.coffeeShop.model.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,6 +27,10 @@ public class CategoryEntity implements Serializable {
     private Long id;
     @Column(nullable = false, length = 60, unique = true)
     private String title;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<PropertyEntity> products;
+    @ManyToOne
+    private UserEntity userCreateId;
+    @CreationTimestamp
+    private Date createAt;
+    @UpdateTimestamp
+    private Date updateAt;
 }
