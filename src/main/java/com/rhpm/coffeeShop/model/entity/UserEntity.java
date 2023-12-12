@@ -31,7 +31,7 @@ public class UserEntity implements Serializable, UserDetails {
     @SequenceGenerator(
             name = "user_sequence",
             sequenceName = "user_sequence",
-            allocationSize = 40
+            allocationSize = 1
     )
     @GeneratedValue(
             generator = "user_sequence",

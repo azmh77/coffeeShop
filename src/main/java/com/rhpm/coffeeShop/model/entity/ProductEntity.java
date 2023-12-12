@@ -23,7 +23,7 @@ public class ProductEntity implements Serializable {
     @SequenceGenerator(
             name = "product_sequence",
             sequenceName = "product_sequence",
-            allocationSize = 40
+            allocationSize = 1
     )
     @GeneratedValue(
             generator = "product_sequence",

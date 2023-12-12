@@ -17,7 +17,7 @@ public class OldUserPasswordEntity implements Serializable {
     @SequenceGenerator(
             name = "oldPassword_sequence",
             sequenceName = "oldPassword_sequence",
-            allocationSize = 40
+            allocationSize = 1
     )
     @GeneratedValue(
             generator = "oldPassword_sequence",

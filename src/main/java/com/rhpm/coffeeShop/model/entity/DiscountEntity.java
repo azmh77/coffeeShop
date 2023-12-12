@@ -18,7 +18,7 @@ public class DiscountEntity implements Serializable {
     @SequenceGenerator(
             name = "discount_sequence",
             sequenceName = "discount_sequence",
-            allocationSize = 40
+            allocationSize = 1
     )
     @GeneratedValue(
             generator = "discount_sequence",

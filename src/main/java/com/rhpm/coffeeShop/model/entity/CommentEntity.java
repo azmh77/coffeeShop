@@ -15,7 +15,7 @@ public class CommentEntity implements Serializable {
     @SequenceGenerator(
             name = "comments_sequence",
             sequenceName = "comments_sequence",
-            allocationSize = 40
+            allocationSize = 1
     )
     @GeneratedValue(
             generator = "comments_sequence",
