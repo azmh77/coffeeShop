@@ -166,4 +166,14 @@ public class ConvertEntityToDto {
         productResponseDto.setWeightUnit(product.getWeightUnit().getTitle());
         return productResponseDto;
     }
+
+    public static WeightUnitResponseDto convertWeightUnitEntityToDto(WeightUnitEntity weightUnitEntity) {
+        WeightUnitResponseDto weightUnitResponseDto = new WeightUnitResponseDto();
+        weightUnitResponseDto.setId(weightUnitEntity.getId());
+        weightUnitResponseDto.setTitle(weightUnitEntity.getTitle());
+        weightUnitResponseDto.setUserCreateId(weightUnitEntity.getUserCreate().getId());
+        weightUnitResponseDto.setCreateAt(weightUnitEntity.getCreateAt());
+        weightUnitResponseDto.setUpdateAt(weightUnitEntity.getUpdateAt());
+        return weightUnitResponseDto;
+    }
 }

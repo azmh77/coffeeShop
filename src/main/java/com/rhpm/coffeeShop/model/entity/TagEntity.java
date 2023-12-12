@@ -18,7 +18,7 @@ public class TagEntity implements Serializable {
     @SequenceGenerator(
             name = "tags_sequence",
             sequenceName = "tags_sequence",
-            allocationSize = 1
+            allocationSize = 40
     )
     @GeneratedValue(
             generator = "tags_sequence",

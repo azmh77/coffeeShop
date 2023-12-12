@@ -22,7 +22,7 @@ public class BrandEntity implements Serializable {
     @SequenceGenerator(
             name = "brands_sequence",
             sequenceName = "brands_sequence",
-            allocationSize = 1
+            allocationSize = 40
     )
     @GeneratedValue(
             generator = "brands_sequence",

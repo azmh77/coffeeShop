@@ -18,7 +18,7 @@ public class WeightUnitEntity implements Serializable {
     @SequenceGenerator(
             name = "weightUnit_sequence",
             sequenceName = "weightUnit_sequence",
-            allocationSize = 1
+            allocationSize = 40
     )
     @GeneratedValue(
             generator = "weightUnit_sequence",

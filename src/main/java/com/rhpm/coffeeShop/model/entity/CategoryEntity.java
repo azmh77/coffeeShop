@@ -19,7 +19,7 @@ public class CategoryEntity implements Serializable {
     @SequenceGenerator(
             name = "category_sequence",
             sequenceName = "category_sequence",
-            allocationSize = 1
+            allocationSize = 40
     )
     @GeneratedValue(
             generator = "category_sequence",

@@ -17,7 +17,7 @@ public class OldUserEmailEntity implements Serializable {
     @SequenceGenerator(
             name = "oldEmail_sequence",
             sequenceName = "oldEmail_sequence",
-            allocationSize = 1
+            allocationSize = 40
     )
     @GeneratedValue(
             generator = "oldEmail_sequence",

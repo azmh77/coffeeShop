@@ -15,7 +15,7 @@ public class ProductPicEntity implements Serializable {
     @SequenceGenerator(
             name = "productPic_sequence",
             sequenceName = "productPic_sequence",
-            allocationSize = 1
+            allocationSize = 40
     )
     @GeneratedValue(
             generator = "productPic_sequence",
