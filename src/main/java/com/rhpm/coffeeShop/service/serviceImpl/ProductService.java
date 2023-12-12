@@ -61,7 +61,6 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
             product.setAdminView(false);
             product.setViewCount(0L);
             product.setWeightUnit(weightUnit);
-            product.setUsersLiked(new ArrayList<>(Collections.emptyList()));
             productRepository.save(product);
             return ConvertEntityToDto.convertProductEntityToDto(product);
         }

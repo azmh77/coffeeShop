@@ -163,6 +163,7 @@ public class ConvertEntityToDto {
         }).toList();
         productResponseDto.setCategory(categoryResponseDtos);
         productResponseDto.setWeightUnit(product.getWeightUnit().getTitle());
+//        productResponseDto.setUsersLiked(convertUserEntityToDto(product.getUsersLiked()));
         return productResponseDto;
     }
 
