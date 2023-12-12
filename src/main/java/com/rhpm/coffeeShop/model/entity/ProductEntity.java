@@ -35,7 +35,7 @@ public class ProductEntity implements Serializable {
     @Column(nullable = false, length = 10000)
     private String description;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name = "brandId")
     private BrandEntity brand;
     @Column(nullable = false)
     private String price;
@@ -53,16 +53,16 @@ public class ProductEntity implements Serializable {
     private String productImgName;
     private Boolean isEnable;
     private Boolean discount;
-    @ManyToOne
-    private DiscountEntity discountEntity;
     private Long likeCount;
     private Long commentCount;
     @ManyToOne
+    @JoinColumn(name = "userCreatedId")
     private UserEntity userCreated;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserEntity> usersLiked;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<CommentEntity> comments;
+    @Lob
     private Long viewCount;
     private Boolean adminView;
     @CreationTimestamp
@@ -72,6 +72,7 @@ public class ProductEntity implements Serializable {
     private Long sellCount;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<CategoryEntity> category;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "weightUnitId")
     private WeightUnitEntity weightUnit;
 }

@@ -20,7 +20,6 @@ public class ProductResponseDto {
     private String productImgName;
     private Boolean isEnable;
     private Boolean discount;
-    private String discountCode;
     private Long likeCount;
     private Long commentCount;
     private Long userCreatedId;

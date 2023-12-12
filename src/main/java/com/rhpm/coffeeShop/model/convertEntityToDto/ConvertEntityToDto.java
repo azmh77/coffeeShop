@@ -144,7 +144,6 @@ public class ConvertEntityToDto {
         productResponseDto.setProductImgName(product.getProductImgName());
         productResponseDto.setIsEnable(product.getIsEnable());
         productResponseDto.setDiscount(product.getDiscount());
-        productResponseDto.setDiscountCode(product.getDiscountEntity().getCode());
         productResponseDto.setLikeCount(product.getLikeCount());
         productResponseDto.setCommentCount(product.getCommentCount());
         productResponseDto.setUserCreatedId(product.getUserCreated().getId());

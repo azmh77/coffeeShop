@@ -11,9 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -37,8 +35,6 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
             BrandEntity brand = brandRepository.findById(productRequestDto.getBrandId())
                     .orElseThrow(() -> new MasterException("برند مورد نطر یافت نشد!"));
             List<TagEntity> tags = productRequestDto.getTag();
-            DiscountEntity discount = discountRepository.findById(productRequestDto.getDiscountId())
-                    .orElseThrow(() -> new MasterException("کد تخفیف مورد نطر یافت نشد!"));
             UserEntity user = userRepository.findById(productRequestDto.getUserCreatedId()).orElseThrow(
                     () -> new MasterException("کاربر پیدا نشد!")
             );
@@ -54,7 +50,6 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
             product.setTag(tags);
             product.setInventoryCount(productRequestDto.getInventoryCount());
             product.setDiscount(productRequestDto.getDiscount());
-            product.setDiscountEntity(discount);
             product.setUserCreated(user);
             product.setCategory(categorys);
             product.setProductImgUrl(ImageUtils.compressImage(productRequestDto.getProfilePic().getBytes()));
@@ -66,14 +61,20 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
             product.setAdminView(false);
             product.setViewCount(0L);
             product.setWeightUnit(weightUnit);
+            product.setUsersLiked(new ArrayList<>(Collections.emptyList()));
             productRepository.save(product);
             return ConvertEntityToDto.convertProductEntityToDto(product);
         }
     }
 
     @Override
-    public ProductResponseDto getProductById(Long id) {
+    public ProductResponseDto getProductById(Long id) throws MasterException {
         Optional<ProductEntity> user = productRepository.findById(id);
+        ProductEntity product = productRepository.findById(id)
+                .orElseThrow(() -> new MasterException("محصولی وجود ندارد!"));
+        product.setViewCount(product.getViewCount() + 1);
+        productRepository.save(product);
         return ConvertEntityToDto.convertProductEntityToDto(user.get());
     }
 }
+

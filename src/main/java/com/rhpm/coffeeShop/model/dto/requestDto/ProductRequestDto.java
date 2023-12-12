@@ -19,7 +19,6 @@ public class ProductRequestDto {
     private Long inventoryCount;
     private MultipartFile profilePic;
     private Boolean discount;
-    private Long discountId;
     private Long userCreatedId;
     private List<CategoryEntity> category;
     private Long weightUnitId;

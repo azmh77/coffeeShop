@@ -22,7 +22,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ProductResponseDto getProductById(@PathVariable Long id) {
+    public ProductResponseDto getProductById(@PathVariable Long id) throws MasterException {
         return productService.getProductById(id);
     }
 }
