@@ -1,6 +1,5 @@
 package com.rhpm.coffeeShop.model.dto.responseDto;
 
-import com.rhpm.coffeeShop.model.entity.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -33,4 +32,5 @@ public class ProductResponseDto {
     private LocalDateTime updated;
     private Long sellCount;
     private List<CategoryResponseDto> category;
+    private String weightUnit;
 }

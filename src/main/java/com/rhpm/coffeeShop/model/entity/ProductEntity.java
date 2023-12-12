@@ -72,4 +72,6 @@ public class ProductEntity implements Serializable {
     private Long sellCount;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<CategoryEntity> category;
+    @OneToOne
+    private WeightUnitEntity weightUnit;
 }

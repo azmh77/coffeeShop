@@ -22,4 +22,5 @@ public class ProductRequestDto {
     private Long discountId;
     private Long userCreatedId;
     private List<CategoryEntity> category;
+    private Long weightUnitId;
 }

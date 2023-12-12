@@ -22,7 +22,7 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
     private final BrandRepository brandRepository;
     private final DiscountRepository discountRepository;
     private final UserRepository userRepository;
-    private final CategoryRepository categoryRepository;
+    private final WeightUnitRepository weightUnitRepository;
 
     @Override
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto) throws MasterException, IOException {
@@ -43,6 +43,8 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
                     () -> new MasterException("کاربر پیدا نشد!")
             );
             List<CategoryEntity> categorys = productRequestDto.getCategory();
+            WeightUnitEntity weightUnit = weightUnitRepository.findById(productRequestDto.getWeightUnitId())
+                    .orElseThrow(() -> new MasterException("واحد وزن تعریف نشده است!"));
             product.setTitle(productRequestDto.getTitle());
             product.setDescription(productRequestDto.getDescription());
             product.setBrand(brand);
@@ -63,6 +65,7 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
             product.setSellCount(0L);
             product.setAdminView(false);
             product.setViewCount(0L);
+            product.setWeightUnit(weightUnit);
             productRepository.save(product);
             return ConvertEntityToDto.convertProductEntityToDto(product);
         }
