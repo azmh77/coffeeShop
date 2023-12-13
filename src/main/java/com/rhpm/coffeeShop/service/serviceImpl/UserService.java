@@ -17,6 +17,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,15 +30,38 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class UserService implements com.rhpm.coffeeShop.service.UserService {
+public class UserService implements com.rhpm.coffeeShop.service.UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+
+    @Override
+    public UserDetails loadUserByUsername(String email)
+            throws UsernameNotFoundException {
+
+        Optional<User> opt = userRepository.findUserByEmail(email);
+
+        if (opt.isEmpty())
+            throw new UsernameNotFoundException("User with email: " + email + " not found !");
+        else {
+            User user = opt.get();
+            return new org.springframework.security.core.userdetails.User(
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.getAuthorities()
+                            .stream()
+                            .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+                            .collect(Collectors.toSet())
+            );
+        }
+
+    }
 
     @Override
     public AuthResponse createUser(UserAuthRequestDto userRequestDto) throws MasterException {

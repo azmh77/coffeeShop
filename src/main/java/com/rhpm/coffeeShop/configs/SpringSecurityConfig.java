@@ -1,6 +1,6 @@
 package com.rhpm.coffeeShop.configs;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SpringSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -32,8 +32,11 @@ public class SpringSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(new AntPathRequestMatcher("/", "GET")).permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/", "GET"),
+                                new AntPathRequestMatcher("/user/register", "POST"),
+                                new AntPathRequestMatcher("/user/login", "POST")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/product/**", "POST")).hasAuthority("ADMIN")
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

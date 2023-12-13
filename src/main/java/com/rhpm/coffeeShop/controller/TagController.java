@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/tag")
+@RequestMapping(value = "/product/tag")
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class TagController {

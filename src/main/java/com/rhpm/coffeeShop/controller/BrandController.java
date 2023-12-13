@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/brand")
+@RequestMapping(value = "/product/brand")
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class BrandController {

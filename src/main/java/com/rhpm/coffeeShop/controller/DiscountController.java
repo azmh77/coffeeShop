@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/discount")
+@RequestMapping(value = "/product/discount")
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class DiscountController {

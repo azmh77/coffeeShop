@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/weightUnit")
+@RequestMapping(value = "/product/weightUnit")
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class WeightUnitController {
