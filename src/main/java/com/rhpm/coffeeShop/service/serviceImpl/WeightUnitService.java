@@ -9,8 +9,10 @@ import com.rhpm.coffeeShop.model.exceptions.MasterException;
 import com.rhpm.coffeeShop.repository.UserRepository;
 import com.rhpm.coffeeShop.repository.WeightUnitRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,5 +44,30 @@ public class WeightUnitService implements com.rhpm.coffeeShop.service.WeightUnit
             }
             return ConvertEntityToDto.convertWeightUnitEntityToDto(weightUnitEntity);
         }
+    }
+
+    @Override
+    public List<WeightUnitResponseDto> getAllWeightUnit() {
+        return null;
+    }
+
+    @Override
+    public WeightUnitResponseDto getWeightUnitById(Long id) {
+        return null;
+    }
+
+    @Override
+    public WeightUnitResponseDto editeWeightUnit(WeightUnitResponseDto weightUnitResponseDto, Long id) {
+        return null;
+    }
+
+    @Override
+    public void deleteWeightUnit(Long id) {
+
+    }
+
+    @Override
+    public Page<WeightUnitResponseDto> getWeightUnitPagination(int offset, int pageSize) {
+        return null;
     }
 }

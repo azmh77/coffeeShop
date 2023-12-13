@@ -10,9 +10,11 @@ import com.rhpm.coffeeShop.model.exceptions.MasterException;
 import com.rhpm.coffeeShop.repository.TagRepository;
 import com.rhpm.coffeeShop.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,5 +45,30 @@ public class TagService implements com.rhpm.coffeeShop.service.TagService {
             }
             return ConvertEntityToDto.convertTagEntityToDto(tag);
         }
+    }
+
+    @Override
+    public List<TagResponseDto> getAllTags() {
+        return null;
+    }
+
+    @Override
+    public TagResponseDto getTagsById(Long id) {
+        return null;
+    }
+
+    @Override
+    public TagResponseDto editeTags(TagResponseDto tagResponseDto, Long id) {
+        return null;
+    }
+
+    @Override
+    public void deleteTags(Long id) {
+
+    }
+
+    @Override
+    public Page<TagResponseDto> getTagsWithPagination(int offset, int pageSize) {
+        return null;
     }
 }

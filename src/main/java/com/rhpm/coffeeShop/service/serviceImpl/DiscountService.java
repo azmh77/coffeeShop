@@ -9,9 +9,11 @@ import com.rhpm.coffeeShop.model.exceptions.MasterException;
 import com.rhpm.coffeeShop.repository.DiscountRepository;
 import com.rhpm.coffeeShop.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,5 +44,30 @@ public class DiscountService implements com.rhpm.coffeeShop.service.DiscountServ
             }
             return ConvertEntityToDto.convertDiscountEntityToDto(discount);
         }
+    }
+
+    @Override
+    public List<DiscountResponseDto> getAllDiscount() {
+        return null;
+    }
+
+    @Override
+    public DiscountResponseDto getDiscountById(Long id) {
+        return null;
+    }
+
+    @Override
+    public DiscountResponseDto editeDiscount(DiscountRequestDto discountRequestDto, Long id) {
+        return null;
+    }
+
+    @Override
+    public void deleteDiscount(Long id) {
+
+    }
+
+    @Override
+    public Page<DiscountResponseDto> getDiscountWithPagination(int offset, int pageSize) {
+        return null;
     }
 }
