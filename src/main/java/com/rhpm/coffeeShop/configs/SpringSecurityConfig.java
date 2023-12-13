@@ -1,6 +1,6 @@
 package com.rhpm.coffeeShop.configs;
 
-import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+@Data
 public class SpringSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -34,7 +34,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(new AntPathRequestMatcher("/", "GET"),
                                 new AntPathRequestMatcher("/user/**", "")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/product/**", "POST")).hasAuthority("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/product/**", "POST")).hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
