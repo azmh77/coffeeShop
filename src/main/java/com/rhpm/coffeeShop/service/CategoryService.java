@@ -12,11 +12,11 @@ public interface CategoryService {
 
     List<CategoryResponseDto> getAllCategory();
 
-    CategoryResponseDto getCategoryById();
+    CategoryResponseDto getCategoryById(Long id);
 
-    CategoryResponseDto editeCategory();
+    CategoryResponseDto editeCategory(CategoryRequestDto categoryRequestDto, Long id) throws MasterException;
 
-    void deleteCategory();
+    void deleteCategory(Long id);
 
     Page<CategoryResponseDto> getCategoryWithPagination(int offset, int pageSize);
 }

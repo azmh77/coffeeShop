@@ -32,17 +32,17 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public CategoryResponseDto getCategoryById(@PathVariable Long id) {
-        return categoryService.getCategoryById();
+        return categoryService.getCategoryById(id);
     }
 
     @PutMapping("/editeCategory")
-    public CategoryResponseDto editeCategory(@ModelAttribute CategoryRequestDto categoryRequestDto, Long id) {
-        return categoryService.editeCategory();
+    public CategoryResponseDto editeCategory(@RequestBody CategoryRequestDto categoryRequestDto, Long id) throws MasterException {
+        return categoryService.editeCategory(categoryRequestDto,id);
     }
 
     @DeleteMapping
     public void deleteCategory(@RequestParam Long id) {
-        categoryService.deleteCategory();
+        categoryService.deleteCategory(id);
     }
 
     @GetMapping("/pagination/{offset}/{pageSize}")
