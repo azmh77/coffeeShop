@@ -11,12 +11,12 @@ import com.rhpm.coffeeShop.repository.UserRepository;
 import com.rhpm.coffeeShop.util.ImageUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -55,26 +55,42 @@ public class BrandService implements com.rhpm.coffeeShop.service.BrandService {
 
     @Override
     public List<BrandResponseDto> getAllBrand() {
-        return null;
+        List<BrandEntity> users = brandRepository.findAll();
+        return users.stream().map(ConvertEntityToDto::convertBrandEntityToDto).toList();
     }
 
     @Override
-    public BrandResponseDto getBrandById() {
-        return null;
+    public BrandResponseDto getBrandById(Long id) {
+        Optional<BrandEntity> brand = brandRepository.findById(id);
+        return ConvertEntityToDto.convertBrandEntityToDto(brand.get());
     }
 
     @Override
-    public BrandResponseDto editeBrand() {
-        return null;
+    public void deleteBrand(Long id) {
+        brandRepository.deleteById(id);
     }
 
     @Override
-    public void deleteBrand() {
-
+    public BrandResponseDto editeBrand(BrandRequestDto brandRequestDto, Long id) throws MasterException, IOException {
+        BrandEntity brand = brandRepository.findById(id)
+                .orElseThrow(() -> new MasterException("برندی با این آیدی وحود ندارد!"));
+        UserEntity user = userRepository.findById(brandRequestDto.getUserCreateId())
+                .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
+        if (!user.getIsActive()) {
+            throw new MasterException("حساب کاربری شما مسدود شده است!");
+        } else {
+            brand.setBrandName(brandRequestDto.getBrandName());
+            brand.setBrandAbout(brandRequestDto.getBrandAbout());
+            brand.setBrandImgUrl(brandRequestDto.getBrandPic().getBytes());
+            brand.setUserCreated(user);
+            brandRepository.save(brand);
+        }
+        return ConvertEntityToDto.convertBrandEntityToDto(brand);
     }
 
     @Override
     public Page<BrandResponseDto> getBrandWithPagination(int offset, int pageSize) {
-        return null;
+        Page<BrandEntity> brandEntities = brandRepository.findAll(PageRequest.of(offset, pageSize));
+        return brandEntities.map(ConvertEntityToDto::convertBrandEntityToDto);
     }
 }

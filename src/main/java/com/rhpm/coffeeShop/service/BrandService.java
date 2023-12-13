@@ -13,11 +13,11 @@ public interface BrandService {
 
     List<BrandResponseDto> getAllBrand();
 
-    BrandResponseDto getBrandById();
+    BrandResponseDto getBrandById(Long id);
 
-    BrandResponseDto editeBrand();
+    void deleteBrand(Long id);
 
-    void deleteBrand();
+    BrandResponseDto editeBrand(BrandRequestDto brandRequestDto, Long id) throws MasterException, IOException;
 
     Page<BrandResponseDto> getBrandWithPagination(int offset, int pageSize);
 }

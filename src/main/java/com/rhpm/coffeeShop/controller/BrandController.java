@@ -32,22 +32,22 @@ public class BrandController {
 
     @GetMapping("/{id}")
     public BrandResponseDto getBrandById(@PathVariable Long id) {
-        return brandService.getBrandById();
+        return brandService.getBrandById(id);
     }
 
     @PutMapping("/editeBrand")
-    public BrandResponseDto editeBrand(@ModelAttribute BrandRequestDto brandRequestDto, Long id) {
-        return brandService.editeBrand();
+    public BrandResponseDto editeBrand(@ModelAttribute BrandRequestDto brandRequestDto, Long id) throws MasterException, IOException {
+        return brandService.editeBrand(brandRequestDto,id);
     }
 
     @DeleteMapping
     public void deleteBrand(@RequestParam Long id) {
-        brandService.deleteBrand();
+        brandService.deleteBrand(id);
     }
 
     @GetMapping("/pagination/{offset}/{pageSize}")
-    public APIResponse<Page<BrandResponseDto>> getUserWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
-        Page<BrandResponseDto> productsWithPagination = brandService.getBrandWithPagination(offset, pageSize);
-        return new APIResponse<>(productsWithPagination.getSize(), productsWithPagination);
+    public APIResponse<Page<BrandResponseDto>> getBrandWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
+        Page<BrandResponseDto> brandWithPagination = brandService.getBrandWithPagination(offset, pageSize);
+        return new APIResponse<>(brandWithPagination.getSize(), brandWithPagination);
     }
 }
