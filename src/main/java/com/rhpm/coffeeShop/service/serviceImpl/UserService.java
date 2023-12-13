@@ -34,34 +34,12 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class UserService implements com.rhpm.coffeeShop.service.UserService, UserDetailsService {
+public class UserService implements com.rhpm.coffeeShop.service.UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-
-    @Override
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
-
-        Optional<User> opt = userRepository.findUserByEmail(email);
-
-        if (opt.isEmpty())
-            throw new UsernameNotFoundException("User with email: " + email + " not found !");
-        else {
-            User user = opt.get();
-            return new org.springframework.security.core.userdetails.User(
-                    user.getUsername(),
-                    user.getPassword(),
-                    user.getAuthorities()
-                            .stream()
-                            .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
-                            .collect(Collectors.toSet())
-            );
-        }
-
-    }
 
     @Override
     public AuthResponse createUser(UserAuthRequestDto userRequestDto) throws MasterException {

@@ -33,8 +33,7 @@ public class SpringSecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(new AntPathRequestMatcher("/", "GET"),
-                                new AntPathRequestMatcher("/user/register", "POST"),
-                                new AntPathRequestMatcher("/user/login", "POST")).permitAll()
+                                new AntPathRequestMatcher("/user/**", "")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/product/**", "POST")).hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
