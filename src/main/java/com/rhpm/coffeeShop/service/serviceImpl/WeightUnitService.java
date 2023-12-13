@@ -22,19 +22,24 @@ public class WeightUnitService implements com.rhpm.coffeeShop.service.WeightUnit
     @Override
     public WeightUnitResponseDto createWeightUnit(WeightUnitRequestDto weightUnitRequestDto) throws MasterException {
         Optional<WeightUnitEntity> weightUnit = weightUnitRepository.findByTitle(weightUnitRequestDto.getTitle());
-        if (weightUnitRequestDto.getTitle().isEmpty()) {
-            throw new MasterException("فیلد ها نباید خالی باشند!");
-        } else if (weightUnitRequestDto.getTitle().length() > 12) {
-            throw new MasterException("تعداد کارکتر برای واحد وزن باید کمتر از 12 کاراکتر باشد!");
-        } else if (weightUnit.isPresent()) {
-            throw new MasterException("نام برند تکراری است!");
+        WeightUnitEntity weightUnitEntity = new WeightUnitEntity();
+        UserEntity user = userRepository.findById(weightUnitRequestDto.getUserCreateId())
+                .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
+        if (!user.getIsActive()) {
+            throw new MasterException("حساب کاربری شما مسدود شده است!");
         } else {
-            WeightUnitEntity weightUnitEntity = new WeightUnitEntity();
-            UserEntity user = userRepository.findById(weightUnitRequestDto.getUserCreateId())
-                    .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
-            weightUnitEntity.setTitle(weightUnitRequestDto.getTitle());
-            weightUnitEntity.setUserCreate(user);
-            weightUnitRepository.save(weightUnitEntity);
+            if (weightUnitRequestDto.getTitle().isEmpty()) {
+                throw new MasterException("فیلد ها نباید خالی باشند!");
+            } else if (weightUnitRequestDto.getTitle().length() > 12) {
+                throw new MasterException("تعداد کارکتر برای واحد وزن باید کمتر از 12 کاراکتر باشد!");
+            } else if (weightUnit.isPresent()) {
+                throw new MasterException("نام برند تکراری است!");
+            } else {
+
+                weightUnitEntity.setTitle(weightUnitRequestDto.getTitle());
+                weightUnitEntity.setUserCreate(user);
+                weightUnitRepository.save(weightUnitEntity);
+            }
             return ConvertEntityToDto.convertWeightUnitEntityToDto(weightUnitEntity);
         }
     }

@@ -24,19 +24,23 @@ public class TagService implements com.rhpm.coffeeShop.service.TagService {
     @Override
     public TagResponseDto createTag(TagRequestDto tagRequestDto) throws MasterException, IOException {
         Optional<TagEntity> tagEntity = tagRepository.findByTitle(tagRequestDto.getTitle());
-        if (tagRequestDto.getTitle().isEmpty()) {
-            throw new MasterException("فیلد ها نباید خالی باشند!");
-        } else if (tagRequestDto.getTitle().length() > 120) {
-            throw new MasterException("طول تگ بیش از حد مجاز!");
-        } else if (tagEntity.isPresent()) {
-            throw new MasterException("تگ تکراری است!");
+        TagEntity tag = new TagEntity();
+        UserEntity user = userRepository.findById(tagRequestDto.getUserCreateId())
+                .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
+        if (!user.getIsActive()) {
+            throw new MasterException("حساب کاربری شما مسدود شده است!");
         } else {
-            TagEntity tag = new TagEntity();
-            UserEntity user = userRepository.findById(tagRequestDto.getUserCreateId())
-                    .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
-            tag.setTitle(tagRequestDto.getTitle());
-            tag.setUserCreate(user);
-            tagRepository.save(tag);
+            if (tagRequestDto.getTitle().isEmpty()) {
+                throw new MasterException("فیلد ها نباید خالی باشند!");
+            } else if (tagRequestDto.getTitle().length() > 120) {
+                throw new MasterException("طول تگ بیش از حد مجاز!");
+            } else if (tagEntity.isPresent()) {
+                throw new MasterException("تگ تکراری است!");
+            } else {
+                tag.setTitle(tagRequestDto.getTitle());
+                tag.setUserCreate(user);
+                tagRepository.save(tag);
+            }
             return ConvertEntityToDto.convertTagEntityToDto(tag);
         }
     }

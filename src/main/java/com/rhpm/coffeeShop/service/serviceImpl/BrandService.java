@@ -10,9 +10,11 @@ import com.rhpm.coffeeShop.repository.BrandRepository;
 import com.rhpm.coffeeShop.repository.UserRepository;
 import com.rhpm.coffeeShop.util.ImageUtils;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,24 +27,54 @@ public class BrandService implements com.rhpm.coffeeShop.service.BrandService {
     @Override
     public BrandResponseDto createBrand(BrandRequestDto brandRequestDto) throws MasterException, IOException {
         Optional<BrandEntity> brandEntity = brandRepository.findByBrandName(brandRequestDto.getBrandName());
-        if (brandRequestDto.getBrandName().isEmpty() || brandRequestDto.getBrandAbout().isEmpty()) {
-            throw new MasterException("فیلد ها نباید خالی باشند!");
-        } else if (brandRequestDto.getBrandPic().isEmpty()) {
-            throw new MasterException("لوگوی برند نباید خالی باشد!");
-        } else if (brandRequestDto.getBrandName().length() > 60) {
-            throw new MasterException("تعداد کارکتر برای اسم برند باید کمتر از 60 کاراکتر باشد!");
-        } else if (brandEntity.isPresent()) {
-            throw new MasterException("نام برند تکراری است!");
+        BrandEntity brand = new BrandEntity();
+        UserEntity user = userRepository.findById(brandRequestDto.getUserCreateId())
+                .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
+        if (!user.getIsActive()) {
+            throw new MasterException("حساب کاربری شما مسدود شده است!");
         } else {
-            BrandEntity brand = new BrandEntity();
-            UserEntity user = userRepository.findById(brandRequestDto.getUserCreateId())
-                    .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
-            brand.setBrandName(brandRequestDto.getBrandName());
-            brand.setBrandAbout(brandRequestDto.getBrandAbout());
-            brand.setBrandImgUrl(ImageUtils.compressImage(brandRequestDto.getBrandPic().getBytes()));
-            brand.setUserCreated(user);
-            brandRepository.save(brand);
-            return ConvertEntityToDto.convertBrandEntityToDto(brand);
+            if (brandRequestDto.getBrandName().isEmpty() || brandRequestDto.getBrandAbout().isEmpty()) {
+                throw new MasterException("فیلد ها نباید خالی باشند!");
+            } else if (brandRequestDto.getBrandPic().isEmpty()) {
+                throw new MasterException("لوگوی برند نباید خالی باشد!");
+            } else if (brandRequestDto.getBrandName().length() > 60) {
+                throw new MasterException("تعداد کارکتر برای اسم برند باید کمتر از 60 کاراکتر باشد!");
+            } else if (brandEntity.isPresent()) {
+                throw new MasterException("نام برند تکراری است!");
+            } else {
+                brand.setBrandName(brandRequestDto.getBrandName());
+                brand.setBrandAbout(brandRequestDto.getBrandAbout());
+                brand.setBrandImgUrl(ImageUtils.compressImage(brandRequestDto.getBrandPic().getBytes()));
+                brand.setUserCreated(user);
+                brandRepository.save(brand);
+
+            }
         }
+        return ConvertEntityToDto.convertBrandEntityToDto(brand);
+    }
+
+    @Override
+    public List<BrandResponseDto> getAllBrand() {
+        return null;
+    }
+
+    @Override
+    public BrandResponseDto getBrandById() {
+        return null;
+    }
+
+    @Override
+    public BrandResponseDto editeBrand() {
+        return null;
+    }
+
+    @Override
+    public void deleteBrand() {
+
+    }
+
+    @Override
+    public Page<BrandResponseDto> getBrandWithPagination(int offset, int pageSize) {
+        return null;
     }
 }

@@ -23,19 +23,23 @@ public class DiscountService implements com.rhpm.coffeeShop.service.DiscountServ
     @Override
     public DiscountResponseDto createDiscount(DiscountRequestDto discountRequestDto) throws MasterException, IOException {
         Optional<DiscountEntity> discountEntity = discountRepository.findByCode(discountRequestDto.getCode());
-        if (discountRequestDto.getCode().isEmpty()) {
-            throw new MasterException("فیلد ها نباید خالی باشند!");
-        } else if (discountRequestDto.getCode().length() > 24) {
-            throw new MasterException("طول کد تخفیف بیش از حد مجاز!");
-        } else if (discountEntity.isPresent()) {
-            throw new MasterException("کد تخفیف تکراری است!");
+        DiscountEntity discount = new DiscountEntity();
+        UserEntity user = userRepository.findById(discountRequestDto.getUserCreateId())
+                .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
+        if (!user.getIsActive()) {
+            throw new MasterException("حساب کاربری شما مسدود شده است!");
         } else {
-            DiscountEntity discount = new DiscountEntity();
-            UserEntity user = userRepository.findById(discountRequestDto.getUserCreateId())
-                    .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
-            discount.setCode(discountRequestDto.getCode());
-            discount.setUserCreate(user);
-            discountRepository.save(discount);
+            if (discountRequestDto.getCode().isEmpty()) {
+                throw new MasterException("فیلد ها نباید خالی باشند!");
+            } else if (discountRequestDto.getCode().length() > 24) {
+                throw new MasterException("طول کد تخفیف بیش از حد مجاز!");
+            } else if (discountEntity.isPresent()) {
+                throw new MasterException("کد تخفیف تکراری است!");
+            } else {
+                discount.setCode(discountRequestDto.getCode());
+                discount.setUserCreate(user);
+                discountRepository.save(discount);
+            }
             return ConvertEntityToDto.convertDiscountEntityToDto(discount);
         }
     }

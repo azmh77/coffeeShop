@@ -17,7 +17,7 @@ public class DiscountController {
     private final DiscountService discountService;
 
     @PostMapping("/createDiscount")
-    public DiscountResponseDto createDiscount(@ModelAttribute DiscountRequestDto discountRequestDto) throws MasterException, IOException {
+    public DiscountResponseDto createDiscount(@RequestBody DiscountRequestDto discountRequestDto) throws MasterException, IOException {
         return discountService.createDiscount(discountRequestDto);
     }
 }

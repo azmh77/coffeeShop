@@ -18,52 +18,55 @@ import java.util.*;
 public class ProductService implements com.rhpm.coffeeShop.service.ProductService {
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
-    private final DiscountRepository discountRepository;
     private final UserRepository userRepository;
     private final WeightUnitRepository weightUnitRepository;
 
     @Override
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto) throws MasterException, IOException {
-        if (productRequestDto.getTitle().isEmpty() || productRequestDto.getDescription().isEmpty()
-                || productRequestDto.getPrice().isEmpty() || productRequestDto.getProductType().isEmpty()) {
-            throw new MasterException("فیلد ها نباید خالی باشند!");
-
-        } else if (productRequestDto.getWeight().equals(0L) || productRequestDto.getInventoryCount().equals(0L)) {
-            throw new MasterException("وزن یا مقدار اولیه محصول نباید صفر باشد!");
+        UserEntity user = userRepository.findById(productRequestDto.getUserCreatedId()).orElseThrow(
+                () -> new MasterException("کاربر پیدا نشد!")
+        );
+        ProductEntity product = new ProductEntity();
+        if (!user.getIsActive()) {
+            throw new MasterException("حساب کاربری شما مسدود شده است!");
         } else {
-            ProductEntity product = new ProductEntity();
-            BrandEntity brand = brandRepository.findById(productRequestDto.getBrandId())
-                    .orElseThrow(() -> new MasterException("برند مورد نطر یافت نشد!"));
-            List<TagEntity> tags = productRequestDto.getTag();
-            UserEntity user = userRepository.findById(productRequestDto.getUserCreatedId()).orElseThrow(
-                    () -> new MasterException("کاربر پیدا نشد!")
-            );
-            List<CategoryEntity> categorys = productRequestDto.getCategory();
-            WeightUnitEntity weightUnit = weightUnitRepository.findById(productRequestDto.getWeightUnitId())
-                    .orElseThrow(() -> new MasterException("واحد وزن تعریف نشده است!"));
-            product.setTitle(productRequestDto.getTitle());
-            product.setDescription(productRequestDto.getDescription());
-            product.setBrand(brand);
-            product.setPrice(productRequestDto.getPrice());
-            product.setWeight(productRequestDto.getWeight());
-            product.setProductType(productRequestDto.getProductType());
-            product.setTag(tags);
-            product.setInventoryCount(productRequestDto.getInventoryCount());
-            product.setDiscount(productRequestDto.getDiscount());
-            product.setUserCreated(user);
-            product.setCategory(categorys);
-            product.setProductImgUrl(ImageUtils.compressImage(productRequestDto.getProfilePic().getBytes()));
-            product.setProductImgName(UUID.randomUUID().toString());
-            product.setIsEnable(true);
-            product.setLikeCount(0L);
-            product.setCommentCount(0L);
-            product.setSellCount(0L);
-            product.setAdminView(false);
-            product.setViewCount(0L);
-            product.setWeightUnit(weightUnit);
-            productRepository.save(product);
-            return ConvertEntityToDto.convertProductEntityToDto(product);
+            if (productRequestDto.getTitle().isEmpty() || productRequestDto.getDescription().isEmpty()
+                    || productRequestDto.getPrice().isEmpty() || productRequestDto.getProductType().isEmpty()) {
+                throw new MasterException("فیلد ها نباید خالی باشند!");
+
+            } else if (productRequestDto.getWeight().equals(0L) || productRequestDto.getInventoryCount().equals(0L)) {
+                throw new MasterException("وزن یا مقدار اولیه محصول نباید صفر باشد!");
+            } else {
+                BrandEntity brand = brandRepository.findById(productRequestDto.getBrandId())
+                        .orElseThrow(() -> new MasterException("برند مورد نطر یافت نشد!"));
+                List<TagEntity> tags = productRequestDto.getTag();
+                List<CategoryEntity> categorys = productRequestDto.getCategory();
+                WeightUnitEntity weightUnit = weightUnitRepository.findById(productRequestDto.getWeightUnitId())
+                        .orElseThrow(() -> new MasterException("واحد وزن تعریف نشده است!"));
+                product.setTitle(productRequestDto.getTitle());
+                product.setDescription(productRequestDto.getDescription());
+                product.setBrand(brand);
+                product.setPrice(productRequestDto.getPrice());
+                product.setWeight(productRequestDto.getWeight());
+                product.setProductType(productRequestDto.getProductType());
+                product.setTag(tags);
+                product.setInventoryCount(productRequestDto.getInventoryCount());
+                product.setDiscount(productRequestDto.getDiscount());
+                product.setUserCreated(user);
+                product.setCategory(categorys);
+                product.setProductImgUrl(ImageUtils.compressImage(productRequestDto.getProfilePic().getBytes()));
+                product.setProductImgName(UUID.randomUUID().toString());
+                product.setIsEnable(true);
+                product.setLikeCount(0L);
+                product.setCommentCount(0L);
+                product.setSellCount(0L);
+                product.setAdminView(false);
+                product.setViewCount(0L);
+                product.setWeightUnit(weightUnit);
+                productRepository.save(product);
+            }
         }
+        return ConvertEntityToDto.convertProductEntityToDto(product);
     }
 
     @Override
