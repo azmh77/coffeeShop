@@ -10,4 +10,6 @@ public interface ProductService {
     ProductResponseDto createProduct(ProductRequestDto productRequestDto) throws MasterException, IOException;
 
     ProductResponseDto getProductById(Long id) throws MasterException;
+
+    void likeProduct(Long userId, Long productId) throws MasterException;
 }

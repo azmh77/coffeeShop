@@ -25,4 +25,9 @@ public class ProductController {
     public ProductResponseDto getProductById(@PathVariable Long id) throws MasterException {
         return productService.getProductById(id);
     }
+
+    @PostMapping(value = "/likeProduct")
+    public void likeProduct(@RequestParam Long userId, @RequestParam Long productId) throws MasterException {
+        productService.likeProduct(userId,productId);
+    }
 }

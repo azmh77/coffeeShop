@@ -1,5 +1,6 @@
 package com.rhpm.coffeeShop.model.dto.requestDto;
 
+import com.rhpm.coffeeShop.model.dto.responseDto.UserResponseDto;
 import com.rhpm.coffeeShop.model.entity.CategoryEntity;
 import com.rhpm.coffeeShop.model.entity.TagEntity;
 import lombok.Data;
