@@ -69,12 +69,12 @@ public class CommentService implements com.rhpm.coffeeShop.service.CommentServic
         if (product.getComments().isEmpty()) {
             throw new MasterException("کامنتی برای این محصول وجود ندارد!");
         } else {
-            commentRepository.deleteById(commentId);
             List<CommentEntity> oldComments = product.getComments();
             oldComments.remove(comment);
             product.setComments(oldComments);
             product.setCommentCount(product.getCommentCount() - 1);
             productRepository.save(product);
+            commentRepository.deleteById(commentId);
         }
     }
 }
