@@ -66,10 +66,10 @@ public class CommentService implements com.rhpm.coffeeShop.service.CommentServic
                 .orElseThrow(() -> new MasterException("کامنتی با این آیدی وجود ندارد!"));
         ProductEntity product = productRepository.findById(comment.getProducts().getId())
                 .orElseThrow(() -> new MasterException("محصولی با این آیدی وجود ندارد!"));
-        if (product.getComments().isEmpty() && product.getCommentCount() == 0) {
+        if (product.getComments().isEmpty()) {
             throw new MasterException("کامنتی برای این محصول وجود ندارد!");
         } else {
-            commentRepository.delete(comment);
+            commentRepository.deleteById(commentId);
             List<CommentEntity> oldComments = product.getComments();
             oldComments.remove(comment);
             product.setComments(oldComments);
