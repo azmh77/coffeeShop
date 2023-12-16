@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "CS_COMMENTS")
@@ -22,7 +23,7 @@ public class CommentEntity implements Serializable {
     @ManyToOne
     private UserEntity userCreated;
     @ManyToOne(fetch = FetchType.EAGER)
-    ProductEntity product;
+    private ProductEntity products;
     @CreationTimestamp
     private Date createAt;
     @UpdateTimestamp

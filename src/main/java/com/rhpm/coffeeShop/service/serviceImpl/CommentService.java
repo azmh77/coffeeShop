@@ -37,11 +37,14 @@ public class CommentService implements com.rhpm.coffeeShop.service.CommentServic
             } else if (commentRequestDto.getBody().length() > 600) {
                 throw new MasterException("تعداد کارکتر برای نطر باید کمتر از 600 کاراکتر باشد!");
             } else {
+                List<CommentEntity> oldComments = product.getComments();
                 product.setCommentCount(product.getCommentCount() + 1);
                 comment.setBody(commentRequestDto.getBody());
                 comment.setUserCreated(user);
-                comment.setProduct(product);
+                comment.setProducts(product);
                 commentRepository.save(comment);
+                oldComments.add(comment);
+                product.setComments(oldComments);
                 productRepository.save(product);
             }
         }
@@ -60,11 +63,18 @@ public class CommentService implements com.rhpm.coffeeShop.service.CommentServic
     @Override
     public void deleteComment(Long commentId) throws MasterException {
         CommentEntity comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new MasterException("چنین کامنتی وجود ندارد!"));
-        ProductEntity product = productRepository.findById(comment.getProduct().getId())
+                .orElseThrow(() -> new MasterException("کامنتی با این آیدی وجود ندارد!"));
+        ProductEntity product = productRepository.findById(comment.getProducts().getId())
                 .orElseThrow(() -> new MasterException("محصولی با این آیدی وجود ندارد!"));
-        commentRepository.delete(comment);
-        product.setCommentCount(product.getCommentCount() - 1);
-        productRepository.save(product);
+        if (product.getComments().isEmpty() && product.getCommentCount() == 0) {
+            throw new MasterException("کامنتی برای این محصول وجود ندارد!");
+        } else {
+            commentRepository.delete(comment);
+            List<CommentEntity> oldComments = product.getComments();
+            oldComments.remove(comment);
+            product.setComments(oldComments);
+            product.setCommentCount(product.getCommentCount() - 1);
+            productRepository.save(product);
+        }
     }
 }

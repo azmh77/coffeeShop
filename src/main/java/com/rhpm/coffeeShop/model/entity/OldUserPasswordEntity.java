@@ -15,6 +15,7 @@ import java.util.Date;
 public class OldUserPasswordEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String oldPassword;
     private String newPassword;
     private Date passwordChangeDate;

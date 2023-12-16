@@ -54,8 +54,7 @@ public class ProductEntity implements Serializable {
     private UserEntity userCreated;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserEntity> usersLiked;
-    @OneToMany(mappedBy = "product",
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CommentEntity> comments = new ArrayList<>();
     @Lob
     private Long viewCount;

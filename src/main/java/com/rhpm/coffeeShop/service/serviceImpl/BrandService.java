@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -45,6 +46,7 @@ public class BrandService implements com.rhpm.coffeeShop.service.BrandService {
                 brand.setBrandName(brandRequestDto.getBrandName());
                 brand.setBrandAbout(brandRequestDto.getBrandAbout());
                 brand.setBrandImgUrl(ImageUtils.compressImage(brandRequestDto.getBrandPic().getBytes()));
+                brand.setBrandImgName(UUID.randomUUID().toString());
                 brand.setUserCreated(user);
                 brandRepository.save(brand);
 
