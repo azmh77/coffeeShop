@@ -34,7 +34,7 @@ public class ConvertEntityToDto {
         userResponseDto.setIsActive(true);
         List<OldUserPasswordResponseDto> oldUserPasswordResponseDtos = user.getOldUserPasswords().stream().map(oldUserPasswordEntity -> {
             OldUserPasswordResponseDto oldUserPasswordResponseDto = new OldUserPasswordResponseDto();
-            oldUserPasswordResponseDto.setId(oldUserPasswordEntity.getId());
+            oldUserPasswordResponseDto.setId(oldUserPasswordEntity.getUser().getId());
             oldUserPasswordResponseDto.setOldPassword(oldUserPasswordEntity.getOldPassword());
             oldUserPasswordResponseDto.setNewPassword(oldUserPasswordEntity.getNewPassword());
             oldUserPasswordResponseDto.setPasswordChangeDate(oldUserPasswordEntity.getPasswordChangeDate());
@@ -71,7 +71,7 @@ public class ConvertEntityToDto {
 
     public static OldUserPasswordResponseDto convertOldUserPasswordEntityToDto(OldUserPasswordEntity oldUserPasswordEntity) {
         OldUserPasswordResponseDto oldUserPasswordResponseDto = new OldUserPasswordResponseDto();
-        oldUserPasswordResponseDto.setId(oldUserPasswordEntity.getId());
+        oldUserPasswordResponseDto.setId(oldUserPasswordEntity.getUser().getId());
         oldUserPasswordResponseDto.setOldPassword(oldUserPasswordEntity.getOldPassword());
         oldUserPasswordResponseDto.setNewPassword(oldUserPasswordEntity.getNewPassword());
         oldUserPasswordResponseDto.setPasswordChangeDate(oldUserPasswordEntity.getPasswordChangeDate());
