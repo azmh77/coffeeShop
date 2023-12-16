@@ -3,8 +3,11 @@ package com.rhpm.coffeeShop.model.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "CS_COMMENTS")
@@ -12,19 +15,16 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 public class CommentEntity implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "comments_sequence",
-            sequenceName = "comments_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "comments_sequence",
-            strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Lob
     private String body;
     @ManyToOne
     private UserEntity userCreated;
-    @ManyToOne
-    private ProductEntity product;
+    @ManyToOne(fetch = FetchType.EAGER)
+    ProductEntity product;
+    @CreationTimestamp
+    private Date createAt;
+    @UpdateTimestamp
+    private Date updateAt;
 }

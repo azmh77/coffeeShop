@@ -56,7 +56,7 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
                     .lastName(userRequestDto.getLastName())
                     .email(userRequestDto.getEmail())
                     .password(passwordEncoder.encode(userRequestDto.getPassword()))
-                    .role(Role.ROLE_ADMIN)
+                    .role(Role.ADMIN)
                     .isActive(true)
                     .incorrectLoginCount((byte) 0)
                     .currentWalletBalance("0")

@@ -15,14 +15,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class DiscountEntity implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "discount_sequence",
-            sequenceName = "discount_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "discount_sequence",
-            strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 24, unique = true)
     private String code;

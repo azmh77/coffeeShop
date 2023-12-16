@@ -19,14 +19,7 @@ import java.util.Date;
 @Builder
 public class BrandEntity implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "brands_sequence",
-            sequenceName = "brands_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "brands_sequence",
-            strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 60, unique = true)
     private String brandName;

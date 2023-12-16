@@ -14,15 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class OldUserPasswordEntity implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "oldPassword_sequence",
-            sequenceName = "oldPassword_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "oldPassword_sequence",
-            strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String oldPassword;
     private String newPassword;
     private Date passwordChangeDate;

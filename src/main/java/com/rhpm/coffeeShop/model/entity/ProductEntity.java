@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,14 +21,7 @@ import java.util.List;
 @Builder
 public class ProductEntity implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "product_sequence",
-            sequenceName = "product_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "product_sequence",
-            strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 60)
     private String title;
@@ -60,8 +54,9 @@ public class ProductEntity implements Serializable {
     private UserEntity userCreated;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserEntity> usersLiked;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<CommentEntity> comments;
+    @OneToMany(mappedBy = "product",
+            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<CommentEntity> comments = new ArrayList<>();
     @Lob
     private Long viewCount;
     private Boolean adminView;

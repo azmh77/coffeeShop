@@ -15,14 +15,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class TagEntity implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "tags_sequence",
-            sequenceName = "tags_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "tags_sequence",
-            strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 120, unique = true)
     private String title;

@@ -15,14 +15,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class WeightUnitEntity implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "weightUnit_sequence",
-            sequenceName = "weightUnit_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "weightUnit_sequence",
-            strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 12, unique = true)
     private String title;

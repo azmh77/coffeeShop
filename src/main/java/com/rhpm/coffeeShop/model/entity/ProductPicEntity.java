@@ -12,14 +12,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 public class ProductPicEntity implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "productPic_sequence",
-            sequenceName = "productPic_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "productPic_sequence",
-            strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Lob
     @Column(length = 100000)

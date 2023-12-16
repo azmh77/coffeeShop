@@ -34,8 +34,8 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(new AntPathRequestMatcher("/", "GET"),
                                 new AntPathRequestMatcher("/user/**", "")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/product/**", "POST")).hasAuthority("ROLE_ADMIN")
-                        .anyRequest().authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/product/**", "POST")).permitAll()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

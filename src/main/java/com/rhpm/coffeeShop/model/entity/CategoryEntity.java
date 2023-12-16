@@ -16,14 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryEntity implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "category_sequence",
-            sequenceName = "category_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "category_sequence",
-            strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 60, unique = true)
     private String title;

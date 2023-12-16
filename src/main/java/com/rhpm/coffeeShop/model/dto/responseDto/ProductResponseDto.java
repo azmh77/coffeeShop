@@ -23,8 +23,6 @@ public class ProductResponseDto {
     private Long likeCount;
     private Long commentCount;
     private Long userCreatedId;
-    private List<UserResponseDto> usersLiked;
-    //    private List<CommentEntity> comments;
     private Long viewCount;
     private Boolean adminView;
     private LocalDateTime created;

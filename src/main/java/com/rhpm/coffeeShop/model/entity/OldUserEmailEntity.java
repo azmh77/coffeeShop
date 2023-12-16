@@ -14,14 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class OldUserEmailEntity implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "oldEmail_sequence",
-            sequenceName = "oldEmail_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "oldEmail_sequence",
-            strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String oldEmail;
     private String newEmail;
