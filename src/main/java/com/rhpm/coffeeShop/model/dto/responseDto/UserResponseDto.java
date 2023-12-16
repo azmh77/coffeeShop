@@ -25,10 +25,7 @@ public class UserResponseDto {
     private Boolean isActive;
     private LocalDateTime RegisterDate;
     private LocalDateTime lastPurchase;
-    private LocalDateTime lastPasswordChange;
     private LocalDateTime lastEmailChange;
-    private List<OldUserPasswordResponseDto> oldUserPasswords;
-    private List<OldUserEmailResponseDto> oldUserEmails;
     private byte incorrectLoginCount;
     private byte[] profileImgUrl;
     private String profileImgName;

@@ -60,10 +60,7 @@ public class UserEntity implements Serializable, UserDetails {
     @CreationTimestamp
     private LocalDateTime RegisterDate;
     private LocalDateTime lastPurchase;
-    private LocalDateTime lastPasswordChange;
     private LocalDateTime lastEmailChange;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private List<OldUserPasswordEntity> oldUserPasswords;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<OldUserEmailEntity> oldUserEmails;
     private byte incorrectLoginCount;

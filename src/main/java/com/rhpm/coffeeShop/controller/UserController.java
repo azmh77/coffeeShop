@@ -4,11 +4,9 @@ import com.rhpm.coffeeShop.APIResponse;
 import com.rhpm.coffeeShop.authentication.AuthRequest;
 import com.rhpm.coffeeShop.authentication.AuthResponse;
 import com.rhpm.coffeeShop.model.dto.requestDto.OldEmailRequestDto;
-import com.rhpm.coffeeShop.model.dto.requestDto.OldPasswordRequestDto;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserAuthRequestDto;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserCompleteDataRequestDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.OldUserEmailResponseDto;
-import com.rhpm.coffeeShop.model.dto.responseDto.OldUserPasswordResponseDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.UserResponseDto;
 import com.rhpm.coffeeShop.model.exceptions.MasterException;
 import com.rhpm.coffeeShop.service.UserService;
@@ -20,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -66,11 +63,6 @@ public class UserController {
     @PutMapping("/updateEmail")
     public OldUserEmailResponseDto updateEmail(@RequestBody OldEmailRequestDto oldEmailRequestDto) throws MasterException {
         return userService.updateEmail(oldEmailRequestDto);
-    }
-
-    @PutMapping("/updatePassword")
-    public OldUserPasswordResponseDto updatePassword(@RequestBody OldPasswordRequestDto oldPasswordRequestDto) throws MasterException {
-        return userService.updatePassword(oldPasswordRequestDto);
     }
 
     @DeleteMapping()

@@ -27,21 +27,10 @@ public class ConvertEntityToDto {
         userResponseDto.setRole(user.getRole().name());
         userResponseDto.setIsActive(user.getIsActive());
         userResponseDto.setLastPurchase(user.getLastPurchase());
-        userResponseDto.setLastPasswordChange(user.getLastPasswordChange());
         userResponseDto.setLastEmailChange(user.getLastEmailChange());
         userResponseDto.setProfileImgName(user.getProfileImgName());
         userResponseDto.setRegisterDate(user.getRegisterDate());
         userResponseDto.setIsActive(true);
-        List<OldUserPasswordResponseDto> oldUserPasswordResponseDtos = user.getOldUserPasswords().stream().map(oldUserPasswordEntity -> {
-            OldUserPasswordResponseDto oldUserPasswordResponseDto = new OldUserPasswordResponseDto();
-            oldUserPasswordResponseDto.setId(oldUserPasswordEntity.getUser().getId());
-            oldUserPasswordResponseDto.setOldPassword(oldUserPasswordEntity.getOldPassword());
-            oldUserPasswordResponseDto.setNewPassword(oldUserPasswordEntity.getNewPassword());
-            oldUserPasswordResponseDto.setUpdateAt(oldUserPasswordEntity.getUpdateAt());
-            oldUserPasswordResponseDto.setUserId(oldUserPasswordEntity.getUser().getId());
-            return oldUserPasswordResponseDto;
-        }).toList();
-        userResponseDto.setOldUserPasswords(oldUserPasswordResponseDtos);
         List<OldUserEmailResponseDto> oldUserEmailResponseDtos = user.getOldUserEmails().stream().map(oldUserEmailEntity -> {
             OldUserEmailResponseDto oldUserEmailResponseDto = new OldUserEmailResponseDto();
             oldUserEmailResponseDto.setId(oldUserEmailEntity.getId());
@@ -51,7 +40,6 @@ public class ConvertEntityToDto {
             oldUserEmailResponseDto.setUserId(oldUserEmailEntity.getUser().getId());
             return oldUserEmailResponseDto;
         }).toList();
-        userResponseDto.setOldUserEmails(oldUserEmailResponseDtos);
         userResponseDto.setIncorrectLoginCount(user.getIncorrectLoginCount());
         userResponseDto.setProfileImgUrl(user.getProfileImgUrl());
         userResponseDto.setProfileImgUrl(user.getProfileImgUrl());
@@ -67,16 +55,6 @@ public class ConvertEntityToDto {
         oldUserEmailResponseDto.setUpdateAt(oldUserEmailEntity.getUpdateAt());
         oldUserEmailResponseDto.setUserId(oldUserEmailEntity.getUser().getId());
         return oldUserEmailResponseDto;
-    }
-
-    public static OldUserPasswordResponseDto convertOldUserPasswordEntityToDto(OldUserPasswordEntity oldUserPasswordEntity) {
-        OldUserPasswordResponseDto oldUserPasswordResponseDto = new OldUserPasswordResponseDto();
-        oldUserPasswordResponseDto.setId(oldUserPasswordEntity.getUser().getId());
-        oldUserPasswordResponseDto.setOldPassword(oldUserPasswordEntity.getOldPassword());
-        oldUserPasswordResponseDto.setNewPassword(oldUserPasswordEntity.getNewPassword());
-        oldUserPasswordResponseDto.setUpdateAt(oldUserPasswordEntity.getUpdateAt());
-        oldUserPasswordResponseDto.setUserId(oldUserPasswordEntity.getUser().getId());
-        return oldUserPasswordResponseDto;
     }
 
     public static BrandResponseDto convertBrandEntityToDto(BrandEntity brand) {
