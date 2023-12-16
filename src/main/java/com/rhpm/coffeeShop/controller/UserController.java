@@ -3,8 +3,12 @@ package com.rhpm.coffeeShop.controller;
 import com.rhpm.coffeeShop.APIResponse;
 import com.rhpm.coffeeShop.authentication.AuthRequest;
 import com.rhpm.coffeeShop.authentication.AuthResponse;
+import com.rhpm.coffeeShop.model.dto.requestDto.OldEmailRequestDto;
+import com.rhpm.coffeeShop.model.dto.requestDto.OldPasswordRequestDto;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserAuthRequestDto;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserCompleteDataRequestDto;
+import com.rhpm.coffeeShop.model.dto.responseDto.OldUserEmailResponseDto;
+import com.rhpm.coffeeShop.model.dto.responseDto.OldUserPasswordResponseDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.UserResponseDto;
 import com.rhpm.coffeeShop.model.exceptions.MasterException;
 import com.rhpm.coffeeShop.service.UserService;
@@ -45,11 +49,6 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping()
-    public List<UserResponseDto> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
     @GetMapping("/pagination/{offset}/{pageSize}")
     public APIResponse<Page<UserResponseDto>> getUserWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
         Page<UserResponseDto> productsWithPagination = userService.getUserWithPagination(offset, pageSize);
@@ -62,6 +61,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);
+    }
+
+    @PutMapping("/updateEmail")
+    public OldUserEmailResponseDto updateEmail(@RequestBody OldEmailRequestDto oldEmailRequestDto) throws MasterException {
+        return userService.updateEmail(oldEmailRequestDto);
+    }
+
+    @PutMapping("/updatePassword")
+    public OldUserPasswordResponseDto updatePassword(@RequestBody OldPasswordRequestDto oldPasswordRequestDto) throws MasterException {
+        return userService.updatePassword(oldPasswordRequestDto);
     }
 
     @DeleteMapping()

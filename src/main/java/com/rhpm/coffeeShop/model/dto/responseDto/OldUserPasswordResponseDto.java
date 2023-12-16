@@ -9,6 +9,6 @@ public class OldUserPasswordResponseDto {
     private Long id;
     private String oldPassword;
     private String newPassword;
-    private Date passwordChangeDate;
+    private Date updateAt;
     private Long userId;
 }

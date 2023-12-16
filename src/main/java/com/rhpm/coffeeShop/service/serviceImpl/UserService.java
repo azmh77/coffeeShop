@@ -4,12 +4,20 @@ import com.rhpm.coffeeShop.authentication.AuthRequest;
 import com.rhpm.coffeeShop.authentication.AuthResponse;
 import com.rhpm.coffeeShop.configs.JwtService;
 import com.rhpm.coffeeShop.model.convertEntityToDto.ConvertEntityToDto;
+import com.rhpm.coffeeShop.model.dto.requestDto.OldEmailRequestDto;
+import com.rhpm.coffeeShop.model.dto.requestDto.OldPasswordRequestDto;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserAuthRequestDto;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserCompleteDataRequestDto;
+import com.rhpm.coffeeShop.model.dto.responseDto.OldUserEmailResponseDto;
+import com.rhpm.coffeeShop.model.dto.responseDto.OldUserPasswordResponseDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.UserResponseDto;
+import com.rhpm.coffeeShop.model.entity.OldUserEmailEntity;
+import com.rhpm.coffeeShop.model.entity.OldUserPasswordEntity;
 import com.rhpm.coffeeShop.model.entity.UserEntity;
 import com.rhpm.coffeeShop.model.enums.Role;
 import com.rhpm.coffeeShop.model.exceptions.MasterException;
+import com.rhpm.coffeeShop.repository.OldEmailRepository;
+import com.rhpm.coffeeShop.repository.OldPasswordRepository;
 import com.rhpm.coffeeShop.repository.UserRepository;
 import com.rhpm.coffeeShop.util.ImageUtils;
 import lombok.AllArgsConstructor;
@@ -17,26 +25,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class UserService implements com.rhpm.coffeeShop.service.UserService {
 
     private final UserRepository userRepository;
+    private final OldEmailRepository oldEmailRepository;
+    private final OldPasswordRepository oldPasswordRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -132,12 +134,6 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
     }
 
     @Override
-    public List<UserResponseDto> getAllUsers() {
-        List<UserEntity> users = userRepository.findAll();
-        return users.stream().map(ConvertEntityToDto::convertUserEntityToDto).toList();
-    }
-
-    @Override
     public Page<UserResponseDto> getUserWithPagination(int offset, int pageSize) {
         Page<UserEntity> userEntities = userRepository.findAll(PageRequest.of(offset, pageSize));
         return userEntities.map(ConvertEntityToDto::convertUserEntityToDto);
@@ -148,6 +144,50 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new MasterException("کاربر مورد نظر یافت نشد!"));
         return ImageUtils.decompressImage(userEntity.getProfileImgUrl());
+    }
+
+    @Override
+    public OldUserEmailResponseDto updateEmail(OldEmailRequestDto oldEmailRequestDto) throws MasterException {
+        UserEntity user = userRepository.findById(oldEmailRequestDto.getUserId())
+                .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
+        if (oldEmailRequestDto.getNewEmail().isEmpty()) {
+            throw new MasterException("فیلد ها نباید خالی باشند!");
+        } else if (oldEmailRequestDto.getNewEmail().length() > 320) {
+            throw new MasterException("تعداد کارکتر های وارد شده بیش از حد مجاز!");
+        } else {
+            OldUserEmailEntity oldUserEmail = new OldUserEmailEntity();
+            String oldEmail = user.getEmail();
+            user.setEmail(oldEmailRequestDto.getNewEmail());
+            user.setEmailConfirmation(false);
+            oldUserEmail.setOldEmail(oldEmail);
+            oldUserEmail.setNewEmail(oldEmailRequestDto.getNewEmail());
+            oldUserEmail.setUser(user);
+            userRepository.save(user);
+            oldEmailRepository.save(oldUserEmail);
+            return ConvertEntityToDto.convertOldUerEmailEntityToDto(oldUserEmail);
+        }
+    }
+
+    @Override
+    public OldUserPasswordResponseDto updatePassword(OldPasswordRequestDto oldPasswordRequestDto) throws MasterException {
+        UserEntity user = userRepository.findById(oldPasswordRequestDto.getUserId())
+                .orElseThrow(() -> new MasterException("کاربری با این آیدی وجود ندارد!"));
+        if (oldPasswordRequestDto.getOldPassword().isEmpty() || oldPasswordRequestDto.getNewPassword().isEmpty()) {
+            throw new MasterException("فیلد ها نباید خالی باشند!");
+        } else if (oldPasswordRequestDto.getNewPassword().length() > 60) {
+            throw new MasterException("تعداد کارکتر های وارد شده بیش از حد مجاز!");
+        } else if (!oldPasswordRequestDto.getOldPassword().equals(user.getPassword())) {
+            throw new MasterException("رمز عبور قبلی شما اشتباه است!");
+        } else {
+            OldUserPasswordEntity oldUserPassword = new OldUserPasswordEntity();
+            oldUserPassword.setOldPassword(oldPasswordRequestDto.getOldPassword());
+            oldUserPassword.setNewPassword(oldPasswordRequestDto.getNewPassword());
+            oldUserPassword.setUser(user);
+            user.setPassword(passwordEncoder.encode(oldPasswordRequestDto.getNewPassword()));
+            userRepository.save(user);
+            oldPasswordRepository.save(oldUserPassword);
+            return ConvertEntityToDto.convertOldUserPasswordEntityToDto(oldUserPassword);
+        }
     }
 
     @Override

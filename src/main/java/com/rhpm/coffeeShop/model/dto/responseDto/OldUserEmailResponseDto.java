@@ -9,6 +9,6 @@ public class OldUserEmailResponseDto {
     private Long id;
     private String oldEmail;
     private String newEmail;
-    private Date emailChangeDate;
+    private Date updateAt;
     private Long userId;
 }

@@ -37,7 +37,7 @@ public class ConvertEntityToDto {
             oldUserPasswordResponseDto.setId(oldUserPasswordEntity.getUser().getId());
             oldUserPasswordResponseDto.setOldPassword(oldUserPasswordEntity.getOldPassword());
             oldUserPasswordResponseDto.setNewPassword(oldUserPasswordEntity.getNewPassword());
-            oldUserPasswordResponseDto.setPasswordChangeDate(oldUserPasswordEntity.getPasswordChangeDate());
+            oldUserPasswordResponseDto.setUpdateAt(oldUserPasswordEntity.getUpdateAt());
             oldUserPasswordResponseDto.setUserId(oldUserPasswordEntity.getUser().getId());
             return oldUserPasswordResponseDto;
         }).toList();
@@ -47,7 +47,7 @@ public class ConvertEntityToDto {
             oldUserEmailResponseDto.setId(oldUserEmailEntity.getId());
             oldUserEmailResponseDto.setOldEmail(oldUserEmailEntity.getOldEmail());
             oldUserEmailResponseDto.setNewEmail(oldUserEmailEntity.getNewEmail());
-            oldUserEmailResponseDto.setEmailChangeDate(oldUserEmailEntity.getEmailChangeDate());
+            oldUserEmailResponseDto.setUpdateAt(oldUserEmailEntity.getUpdateAt());
             oldUserEmailResponseDto.setUserId(oldUserEmailEntity.getUser().getId());
             return oldUserEmailResponseDto;
         }).toList();
@@ -64,7 +64,7 @@ public class ConvertEntityToDto {
         oldUserEmailResponseDto.setId(oldUserEmailEntity.getId());
         oldUserEmailResponseDto.setOldEmail(oldUserEmailEntity.getOldEmail());
         oldUserEmailResponseDto.setNewEmail(oldUserEmailEntity.getNewEmail());
-        oldUserEmailResponseDto.setEmailChangeDate(oldUserEmailEntity.getEmailChangeDate());
+        oldUserEmailResponseDto.setUpdateAt(oldUserEmailEntity.getUpdateAt());
         oldUserEmailResponseDto.setUserId(oldUserEmailEntity.getUser().getId());
         return oldUserEmailResponseDto;
     }
@@ -74,7 +74,7 @@ public class ConvertEntityToDto {
         oldUserPasswordResponseDto.setId(oldUserPasswordEntity.getUser().getId());
         oldUserPasswordResponseDto.setOldPassword(oldUserPasswordEntity.getOldPassword());
         oldUserPasswordResponseDto.setNewPassword(oldUserPasswordEntity.getNewPassword());
-        oldUserPasswordResponseDto.setPasswordChangeDate(oldUserPasswordEntity.getPasswordChangeDate());
+        oldUserPasswordResponseDto.setUpdateAt(oldUserPasswordEntity.getUpdateAt());
         oldUserPasswordResponseDto.setUserId(oldUserPasswordEntity.getUser().getId());
         return oldUserPasswordResponseDto;
     }

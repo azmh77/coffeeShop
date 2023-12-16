@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,8 +18,10 @@ public class OldUserEmailEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String oldEmail;
+    @Column(nullable = false, length = 320, unique = true)
     private String newEmail;
-    private Date emailChangeDate;
+    @UpdateTimestamp
+    private Date updateAt;
     @ManyToOne
     private UserEntity user;
 }
