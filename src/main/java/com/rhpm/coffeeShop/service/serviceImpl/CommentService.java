@@ -13,6 +13,7 @@ import com.rhpm.coffeeShop.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,7 +42,14 @@ public class CommentService implements com.rhpm.coffeeShop.service.CommentServic
                 product.setCommentCount(product.getCommentCount() + 1);
                 comment.setBody(commentRequestDto.getBody());
                 comment.setUserCreated(user);
-                comment.setProducts(product);
+                if (commentRequestDto.getParentId() != null) {
+                    List<CommentEntity> children = new ArrayList<>();
+                    CommentEntity commentParent = commentRepository.findById(commentRequestDto.getParentId())
+                            .orElseThrow(() -> new MasterException("کامنتی با این آیدی وجود ندارد!"));
+                    comment.setParent(commentParent);
+                    children.add(comment);
+                    comment.setChildren(children);
+                }
                 commentRepository.save(comment);
                 oldComments.add(comment);
                 product.setComments(oldComments);
@@ -61,20 +69,16 @@ public class CommentService implements com.rhpm.coffeeShop.service.CommentServic
     }
 
     @Override
-    public void deleteComment(Long commentId) throws MasterException {
+    public void deleteComment(Long commentId, Long productId) throws MasterException {
         CommentEntity comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new MasterException("کامنتی با این آیدی وجود ندارد!"));
-        ProductEntity product = productRepository.findById(comment.getProducts().getId())
-                .orElseThrow(() -> new MasterException("محصولی با این آیدی وجود ندارد!"));
-        if (product.getComments().isEmpty()) {
-            throw new MasterException("کامنتی برای این محصول وجود ندارد!");
-        } else {
-            List<CommentEntity> oldComments = product.getComments();
-            oldComments.remove(comment);
-            product.setComments(oldComments);
-            product.setCommentCount(product.getCommentCount() - 1);
-            productRepository.save(product);
-            commentRepository.deleteById(commentId);
-        }
+        ProductEntity product = productRepository.findById(productId)
+                .orElseThrow(() -> new MasterException("محصولی با این آیدی پیدا نشد!"));
+        List<CommentEntity> oldCommentList = product.getComments();
+        oldCommentList.remove(comment);
+        product.setComments(oldCommentList);
+        productRepository.save(product);
+        commentRepository.delete(comment);
     }
 }
+

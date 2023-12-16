@@ -181,7 +181,6 @@ public class ConvertEntityToDto {
         commentResponseDto.setId(comment.getId());
         commentResponseDto.setBody(comment.getBody());
         commentResponseDto.setUserId(comment.getUserCreated().getId());
-        commentResponseDto.setProductId(comment.getProducts().getId());
         return commentResponseDto;
     }
 }

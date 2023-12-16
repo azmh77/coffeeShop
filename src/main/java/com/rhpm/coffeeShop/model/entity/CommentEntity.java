@@ -1,5 +1,6 @@
 package com.rhpm.coffeeShop.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,8 +24,10 @@ public class CommentEntity implements Serializable {
     private String body;
     @ManyToOne
     private UserEntity userCreated;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private ProductEntity products;
+    @ManyToOne
+    private CommentEntity parent;
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+    private List<CommentEntity> children = new ArrayList<>();
     @CreationTimestamp
     private Date createAt;
     @UpdateTimestamp

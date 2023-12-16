@@ -7,5 +7,4 @@ public class CommentResponseDto {
     private Long id;
     private String body;
     private Long userId;
-    private Long productId;
 }

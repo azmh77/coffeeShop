@@ -27,7 +27,7 @@ public class CommentController {
     }
 
     @DeleteMapping()
-    public void deleteComment(@RequestParam Long commentId) throws MasterException {
-        commentService.deleteComment(commentId);
+    public void deleteComment(@RequestParam Long commentId, @RequestParam Long productId) throws MasterException {
+        commentService.deleteComment(commentId,productId);
     }
 }

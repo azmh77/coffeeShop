@@ -11,5 +11,5 @@ public interface CommentService {
 
     List<CommentResponseDto> getAllComment(Long productId) throws MasterException;
 
-    void deleteComment(Long commentId) throws MasterException;
+    void deleteComment(Long commentId,Long productId) throws MasterException;
 }

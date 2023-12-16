@@ -1,5 +1,6 @@
 package com.rhpm.coffeeShop.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,6 +52,7 @@ public class ProductEntity implements Serializable {
     private Long commentCount;
     @ManyToOne
     @JoinColumn(name = "userCreatedId")
+    @JsonIgnore
     private UserEntity userCreated;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserEntity> usersLiked;
