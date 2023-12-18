@@ -23,13 +23,13 @@ public class ConvertEntityToDto {
         userResponseDto.setCity(user.getCity());
         userResponseDto.setAddress(user.getAddress());
         userResponseDto.setZipCode(user.getZipCode());
-        userResponseDto.setCurrentWalletBalance(user.getCurrentWalletBalance());
         userResponseDto.setRole(user.getRole().name());
         userResponseDto.setIsActive(user.getIsActive());
         userResponseDto.setLastPurchase(user.getLastPurchase());
         userResponseDto.setLastEmailChange(user.getLastEmailChange());
         userResponseDto.setProfileImgName(user.getProfileImgName());
         userResponseDto.setRegisterDate(user.getRegisterDate());
+        userResponseDto.setWalletId(user.getWallet().getId());
         userResponseDto.setIsActive(true);
         List<OldUserEmailResponseDto> oldUserEmailResponseDtos = user.getOldUserEmails().stream().map(oldUserEmailEntity -> {
             OldUserEmailResponseDto oldUserEmailResponseDto = new OldUserEmailResponseDto();

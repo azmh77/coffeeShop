@@ -23,6 +23,5 @@ public class WalletEntity implements Serializable {
     private UserEntity user;
 
     @OneToMany
-    @JsonIgnore
     private List<TransactionEntity> transaction;
 }

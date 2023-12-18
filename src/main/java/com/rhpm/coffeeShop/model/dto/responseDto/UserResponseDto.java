@@ -21,8 +21,8 @@ public class UserResponseDto {
     private String city;
     private String address;
     private String zipCode;
-    private String currentWalletBalance;
     private String role;
+    private Long WalletId;
     private Boolean isActive;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime RegisterDate;

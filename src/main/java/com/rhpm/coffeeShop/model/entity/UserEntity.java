@@ -42,10 +42,8 @@ public class UserEntity implements Serializable, UserDetails {
     private String email;
     private Boolean emailConfirmation;
     @Column(nullable = false, length = 60)
-    @Pattern(regexp = "[a-zA-Z0-9]{8,60}", message = "رمز عبور باید بین 8 تا 60 کاراکتر باشد. باید حروف عددی با حروف بزرگ و کوچک باشد.")
     private String password;
     @Column(length = 15, unique = true)
-    @Pattern(regexp = "[0-9]{11}", message = "شماره موبایل باید 11 رقمی باشد")
     private String phoneNumber;
     private Boolean phoneNumberConfirmation;
     @Column(length = 10, unique = true)
@@ -59,7 +57,8 @@ public class UserEntity implements Serializable, UserDetails {
     private String address;
     @Column(length = 10)
     private String zipCode;
-    private String currentWalletBalance;
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    private WalletEntity wallet;
     @Enumerated(EnumType.STRING)
     private Role role;
     private Boolean isActive;

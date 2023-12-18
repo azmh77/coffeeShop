@@ -12,10 +12,12 @@ import com.rhpm.coffeeShop.model.dto.responseDto.OldUserEmailResponseDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.UserResponseDto;
 import com.rhpm.coffeeShop.model.entity.OldUserEmailEntity;
 import com.rhpm.coffeeShop.model.entity.UserEntity;
+import com.rhpm.coffeeShop.model.entity.WalletEntity;
 import com.rhpm.coffeeShop.model.enums.Role;
 import com.rhpm.coffeeShop.model.exceptions.MasterException;
 import com.rhpm.coffeeShop.repository.OldEmailRepository;
 import com.rhpm.coffeeShop.repository.UserRepository;
+import com.rhpm.coffeeShop.repository.WalletRepository;
 import com.rhpm.coffeeShop.util.ImageUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,6 +42,7 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
 
     private final UserRepository userRepository;
     private final OldEmailRepository oldEmailRepository;
+    private final WalletRepository walletRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -54,6 +57,7 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
         } else if (userRequestDto.getEmail().length() > 320 || userRequestDto.getPassword().length() > 60) {
             throw new MasterException("تعداد کارکتر های وارد شده بیش از حد مجاز!");
         } else {
+            WalletEntity wallet = new WalletEntity();
             UserEntity userEntity = userRepository.save(UserEntity.builder()
                     .firstName(userRequestDto.getFirstName())
                     .lastName(userRequestDto.getLastName())
@@ -62,7 +66,7 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
                     .role(Role.ADMIN)
                     .isActive(true)
                     .incorrectLoginCount(0)
-                    .currentWalletBalance("0")
+                    .wallet(wallet)
                     .emailConfirmation(false)
                     .phoneNumberConfirmation(false)
                     .isCompleteData(false)
@@ -70,6 +74,9 @@ public class UserService implements com.rhpm.coffeeShop.service.UserService {
                     .lastIncorrectLoginDate(new Date())
                     .CSID("_CS_" + UUID.randomUUID() + "_" + userRequestDto.getFirstName() + "_" + userRequestDto.getLastName())
                     .build());
+            wallet.setBalance(0D);
+            wallet.setUser(userEntity);
+            walletRepository.save(wallet);
             var jwtToken = jwtService.generateToken(userEntity);
             return AuthResponse.builder()
                     .token(jwtToken)
