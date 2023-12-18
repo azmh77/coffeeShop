@@ -4,6 +4,7 @@ import com.rhpm.coffeeShop.APIResponse;
 import com.rhpm.coffeeShop.authentication.AuthRequest;
 import com.rhpm.coffeeShop.authentication.AuthResponse;
 import com.rhpm.coffeeShop.model.dto.requestDto.OldEmailRequestDto;
+import com.rhpm.coffeeShop.model.dto.requestDto.UpdatePasswordRequestDto;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserAuthRequestDto;
 import com.rhpm.coffeeShop.model.dto.requestDto.UserCompleteDataRequestDto;
 import com.rhpm.coffeeShop.model.dto.responseDto.OldUserEmailResponseDto;
@@ -63,6 +64,11 @@ public class UserController {
     @PutMapping("/updateEmail")
     public OldUserEmailResponseDto updateEmail(@RequestBody OldEmailRequestDto oldEmailRequestDto) throws MasterException {
         return userService.updateEmail(oldEmailRequestDto);
+    }
+
+    @PutMapping("/updatePassword")
+    public void updatePassword(@RequestBody UpdatePasswordRequestDto updatePasswordRequestDto) throws MasterException {
+        userService.updatePassword(updatePasswordRequestDto);
     }
 
     @DeleteMapping()

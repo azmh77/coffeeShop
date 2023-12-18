@@ -63,7 +63,8 @@ public class UserEntity implements Serializable, UserDetails {
     private LocalDateTime lastEmailChange;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<OldUserEmailEntity> oldUserEmails;
-    private byte incorrectLoginCount;
+    private Integer incorrectLoginCount;
+    private Date lastIncorrectLoginDate;
     private Boolean isCompleteData = false;
     private Integer completeDataCount = 0;
     @Lob

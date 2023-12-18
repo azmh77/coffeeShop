@@ -40,7 +40,7 @@ public class ConvertEntityToDto {
             oldUserEmailResponseDto.setUserId(oldUserEmailEntity.getUser().getId());
             return oldUserEmailResponseDto;
         }).toList();
-        userResponseDto.setIncorrectLoginCount(user.getIncorrectLoginCount());
+        userResponseDto.setIncorrectLoginCount(userResponseDto.getIncorrectLoginCount());
         userResponseDto.setProfileImgUrl(user.getProfileImgUrl());
         userResponseDto.setProfileImgUrl(user.getProfileImgUrl());
         userResponseDto.setCSID(user.getCSID());
