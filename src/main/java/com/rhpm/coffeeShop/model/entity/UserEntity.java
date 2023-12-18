@@ -1,7 +1,10 @@
 package com.rhpm.coffeeShop.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rhpm.coffeeShop.model.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,11 +38,14 @@ public class UserEntity implements Serializable, UserDetails {
     @Column(nullable = false, length = 60)
     private String lastName;
     @Column(nullable = false, length = 320, unique = true)
+    @Email
     private String email;
     private Boolean emailConfirmation;
     @Column(nullable = false, length = 60)
+    @Pattern(regexp = "[a-zA-Z0-9]{8,60}", message = "رمز عبور باید بین 8 تا 60 کاراکتر باشد. باید حروف عددی با حروف بزرگ و کوچک باشد.")
     private String password;
     @Column(length = 15, unique = true)
+    @Pattern(regexp = "[0-9]{11}", message = "شماره موبایل باید 11 رقمی باشد")
     private String phoneNumber;
     private Boolean phoneNumberConfirmation;
     @Column(length = 10, unique = true)

@@ -1,5 +1,6 @@
 package com.rhpm.coffeeShop.model.dto.responseDto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -25,7 +26,9 @@ public class ProductResponseDto {
     private Long userCreatedId;
     private Long viewCount;
     private Boolean adminView;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime created;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updated;
     private Long sellCount;
     private List<CategoryResponseDto> category;

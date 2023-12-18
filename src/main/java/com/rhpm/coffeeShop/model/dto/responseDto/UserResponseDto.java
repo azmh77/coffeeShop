@@ -1,5 +1,6 @@
 package com.rhpm.coffeeShop.model.dto.responseDto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -23,8 +24,11 @@ public class UserResponseDto {
     private String currentWalletBalance;
     private String role;
     private Boolean isActive;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime RegisterDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastPurchase;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastEmailChange;
     private byte incorrectLoginCount;
     private byte[] profileImgUrl;
