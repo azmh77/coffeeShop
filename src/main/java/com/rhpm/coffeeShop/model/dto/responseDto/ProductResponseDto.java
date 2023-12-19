@@ -22,6 +22,7 @@ public class ProductResponseDto {
     private Boolean isEnable;
     private Boolean discount;
     private Long likeCount;
+    private Long disLikeCount;
     private Long commentCount;
     private Long userCreatedId;
     private Long viewCount;

@@ -16,4 +16,8 @@ public interface ProductService {
     void likeProduct(Long userId, Long productId) throws MasterException;
 
     List<UserResponseDto> getAllUsersLiked(Long productId) throws MasterException;
+
+    void disLikeProduct(Long userId, Long productId) throws MasterException;
+
+    List<UserResponseDto> getAllUsersDisLiked(Long productId) throws MasterException;
 }

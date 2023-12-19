@@ -123,6 +123,7 @@ public class ConvertEntityToDto {
         productResponseDto.setIsEnable(product.getIsEnable());
         productResponseDto.setDiscount(product.getDiscount());
         productResponseDto.setLikeCount(product.getLikeCount());
+        productResponseDto.setDisLikeCount(product.getDisLikeCount());
         productResponseDto.setCommentCount(product.getCommentCount());
         productResponseDto.setUserCreatedId(product.getUserCreated().getId());
         productResponseDto.setViewCount(product.getViewCount());

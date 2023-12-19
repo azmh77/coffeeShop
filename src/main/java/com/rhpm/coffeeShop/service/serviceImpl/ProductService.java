@@ -60,6 +60,7 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
                 product.setProductImgName(UUID.randomUUID().toString());
                 product.setIsEnable(true);
                 product.setLikeCount(0L);
+                product.setDisLikeCount(0L);
                 product.setCommentCount(0L);
                 product.setSellCount(0L);
                 product.setAdminView(false);
@@ -113,11 +114,50 @@ public class ProductService implements com.rhpm.coffeeShop.service.ProductServic
     }
 
     @Override
+    public void disLikeProduct(Long userId, Long productId) throws MasterException {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new MasterException("کاربر پیدا نشد!"));
+        ProductEntity product = productRepository.findById(productId)
+                .orElseThrow(() -> new MasterException("کاربر پیدا نشد!"));
+        if (!product.getUsersDisLiked().isEmpty()) {
+            for (UserEntity userEntity : product.getUsersDisLiked()) {
+                if (userEntity.getId().equals(user.getId())) {
+                    product.setDisLikeCount(product.getDisLikeCount() - 1);
+                    List<UserEntity> oldUserLiked = product.getUsersDisLiked();
+                    oldUserLiked.remove(user);
+                    product.setUsersDisLiked(oldUserLiked);
+                } else {
+                    product.setDisLikeCount(product.getDisLikeCount() + 1);
+                    List<UserEntity> oldUserLiked = product.getUsersDisLiked();
+                    oldUserLiked.add(user);
+                    product.setUsersDisLiked(oldUserLiked);
+                }
+                productRepository.save(product);
+                break;
+            }
+        } else {
+            product.setDisLikeCount(product.getDisLikeCount() + 1);
+            List<UserEntity> oldUserLiked = product.getUsersLiked();
+            oldUserLiked.add(user);
+            product.setUsersDisLiked(oldUserLiked);
+            productRepository.save(product);
+        }
+    }
+
+    @Override
     public List<UserResponseDto> getAllUsersLiked(Long productId) throws MasterException {
         ProductEntity product = productRepository.findById(productId)
                 .orElseThrow(() -> new MasterException("محصولی با این آیدی وجود ندارد!"));
         List<UserEntity> usersLiked = product.getUsersLiked();
         return usersLiked.stream().map(ConvertEntityToDto::convertUserEntityToDto).toList();
+    }
+
+    @Override
+    public List<UserResponseDto> getAllUsersDisLiked(Long productId) throws MasterException {
+        ProductEntity product = productRepository.findById(productId)
+                .orElseThrow(() -> new MasterException("محصولی با این آیدی وجود ندارد!"));
+        List<UserEntity> usersDisLiked = product.getUsersDisLiked();
+        return usersDisLiked.stream().map(ConvertEntityToDto::convertUserEntityToDto).toList();
     }
 }
 

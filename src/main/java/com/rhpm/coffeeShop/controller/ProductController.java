@@ -33,8 +33,18 @@ public class ProductController {
         productService.likeProduct(userId, productId);
     }
 
+    @PostMapping(value = "/disLikeProduct")
+    public void disLikeProduct(@RequestParam Long userId, @RequestParam Long productId) throws MasterException {
+        productService.disLikeProduct(userId, productId);
+    }
+
     @GetMapping("/usersLiked")
     public List<UserResponseDto> getAllUsersLiked(@RequestParam Long productId) throws MasterException {
         return productService.getAllUsersLiked(productId);
+    }
+
+    @GetMapping("/usersDisLiked")
+    public List<UserResponseDto> getAllUsersDisLiked(@RequestParam Long productId) throws MasterException {
+        return productService.getAllUsersDisLiked(productId);
     }
 }

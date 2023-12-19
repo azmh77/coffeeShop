@@ -49,13 +49,16 @@ public class ProductEntity implements Serializable {
     private Boolean isEnable;
     private Boolean discount;
     private Long likeCount;
+    private Long disLikeCount;
     private Long commentCount;
     @ManyToOne
     @JoinColumn(name = "userCreatedId")
     @JsonIgnore
     private UserEntity userCreated;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<UserEntity> usersLiked;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<UserEntity> usersDisLiked;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CommentEntity> comments = new ArrayList<>();
     @Lob
