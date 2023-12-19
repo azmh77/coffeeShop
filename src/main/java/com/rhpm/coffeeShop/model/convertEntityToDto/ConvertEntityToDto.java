@@ -161,4 +161,32 @@ public class ConvertEntityToDto {
         commentResponseDto.setUserId(comment.getUserCreated().getId());
         return commentResponseDto;
     }
+
+    public static WalletResponseDto convertWalletEntityToDto(WalletEntity wallet) {
+        WalletResponseDto walletResponseDto = new WalletResponseDto();
+        walletResponseDto.setId(wallet.getId());
+        walletResponseDto.setBalance(wallet.getBalance());
+        List<TransactionResponseDto> transactionResponseDtos = wallet.getTransaction().stream().map(transaction -> {
+            TransactionResponseDto responseDto = new TransactionResponseDto();
+            responseDto.setId(transaction.getId());
+            responseDto.setAmount(transaction.getAmount());
+            responseDto.setTransactionDate(transaction.getTransactionDate());
+            responseDto.setWalletId(transaction.getWalletId());
+            responseDto.setDescription(transaction.getDescription());
+            return responseDto;
+        }).toList();
+        walletResponseDto.setTransaction(transactionResponseDtos);
+        walletResponseDto.setUserId(walletResponseDto.getUserId());
+        return walletResponseDto;
+    }
+
+    public static TransactionResponseDto convertTransactionEntityToDto(TransactionEntity transaction) {
+        TransactionResponseDto transactionResponseDto = new TransactionResponseDto();
+        transactionResponseDto.setId(transaction.getId());
+        transactionResponseDto.setTransactionDate(transaction.getTransactionDate());
+        transactionResponseDto.setAmount(transaction.getAmount());
+        transactionResponseDto.setDescription(transaction.getDescription());
+        transactionResponseDto.setWalletId(transaction.getWalletId());
+        return transactionResponseDto;
+    }
 }
